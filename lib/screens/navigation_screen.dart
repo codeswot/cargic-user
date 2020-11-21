@@ -6,6 +6,7 @@ import 'package:cargic_user/screens/profile_screen.dart';
 import 'package:cargic_user/utils/cargic_icons_icons.dart';
 import 'package:cargic_user/utils/cargic_secondary_icons_icons.dart';
 import 'package:cargic_user/utils/colors.dart';
+import 'package:cargic_user/widgets/app_bar_button.dart';
 import 'package:cargic_user/widgets/cargic_brand_name.dart';
 import 'package:cargic_user/widgets/cute_bottom_nav.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
+  bool isUpComing = true;
   indexController() {
     print(_selectedIndex);
   }
@@ -36,11 +38,66 @@ class _NavigationScreenState extends State<NavigationScreen> {
       drawer: Drawer(),
       appBar: AppBar(
         centerTitle: false,
-        toolbarHeight: 65,
+        toolbarHeight: (_selectedIndex == 1) ? 140 : 70,
         title: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: CargicBrandName(),
         ),
+        actions: (_selectedIndex == 3)
+            ? [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Icon(Icons.more_vert, size: 22),
+                ),
+              ]
+            : [],
+        bottom: (_selectedIndex == 1)
+            ? PreferredSize(
+                child: Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppBarButton(
+                        buttonTitle: 'Upcoming',
+                        buttonColor: (isUpComing == true)
+                            ? CargicColors.brandBlue
+                            : CargicColors.plainWhite,
+                        titleColor: (isUpComing == true)
+                            ? CargicColors.plainWhite
+                            : CargicColors.pitchBlack,
+                        onTap: () {
+                          setState(() {
+                            isUpComing = true;
+                            //fetch upcomin
+                          });
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      AppBarButton(
+                        buttonTitle: 'Completed',
+                        buttonColor: (isUpComing == true)
+                            ? CargicColors.plainWhite
+                            : CargicColors.brandBlue,
+                        titleColor: (isUpComing == true)
+                            ? CargicColors.pitchBlack
+                            : CargicColors.plainWhite,
+                        onTap: () {
+                          setState(() {
+                            isUpComing = false;
+                            //fetch completed
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                preferredSize: Size.fromHeight(75.0),
+              )
+            : PreferredSize(
+                preferredSize: Size.fromHeight(0),
+                child: Container(),
+              ),
       ),
       body: _screens.elementAt(_selectedIndex),
       bottomNavigationBar: SafeArea(
