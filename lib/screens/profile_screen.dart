@@ -1,3 +1,4 @@
+import 'package:cargic_user/screens/cards_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/cargic_profile_card.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,9 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 34.5),
             GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(CardScreen.id);
+              },
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(15),

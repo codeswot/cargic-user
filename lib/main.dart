@@ -40,6 +40,12 @@ class MyApp extends StatelessWidget {
         title: 'Cargic',
         theme: ThemeData(
           appBarTheme: AppBarTheme(
+            // centerTitle: false,
+            textTheme: TextTheme(
+                headline6: TextStyle(
+              color: CargicColors.hoodwinkGrey,
+              fontWeight: FontWeight.w600,
+            )),
             color: CargicColors.plainWhite,
             iconTheme: IconThemeData(
               color: CargicColors.smoothGray,

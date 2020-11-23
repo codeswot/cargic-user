@@ -1,3 +1,5 @@
+import 'package:cargic_user/screens/add_cards_screen.dart';
+import 'package:cargic_user/screens/cards_screen.dart';
 import 'package:cargic_user/screens/home_screen.dart';
 import 'package:cargic_user/screens/login_with_email_screen.dart';
 import 'package:cargic_user/screens/navigation_screen.dart';
@@ -11,4 +13,6 @@ Map<String, WidgetBuilder> appRoute = {
   OnBoardingScreen.id: (context) => OnBoardingScreen(),
   LoginWithEmailScreen.id: (context) => LoginWithEmailScreen(),
   RegisterScreen.id: (context) => RegisterScreen(),
+  CardScreen.id: (context) => CardScreen(),
+  AddCards.id: (context) => AddCards(),
 };
