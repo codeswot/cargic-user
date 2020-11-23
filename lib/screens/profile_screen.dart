@@ -1,7 +1,5 @@
-import 'package:cargic_user/utils/cargic_icons_icons.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/cargic_profile_card.dart';
-import 'package:cargic_user/widgets/cargic_profile_picture.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {

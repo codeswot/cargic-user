@@ -3,6 +3,7 @@ import 'package:cargic_user/screens/cart_screen.dart';
 import 'package:cargic_user/screens/home_screen.dart';
 import 'package:cargic_user/screens/ninja_screen.dart';
 import 'package:cargic_user/screens/profile_screen.dart';
+import 'package:cargic_user/screens/side_nav/side_navigation.dart';
 import 'package:cargic_user/utils/cargic_icons_icons.dart';
 import 'package:cargic_user/utils/cargic_secondary_icons_icons.dart';
 import 'package:cargic_user/utils/colors.dart';
@@ -35,7 +36,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CargicColors.faintWhite,
-      drawer: Drawer(),
+      drawer: CargicSideNav(),
       appBar: AppBar(
         centerTitle: false,
         toolbarHeight: (_selectedIndex == 1) ? 140 : 70,
