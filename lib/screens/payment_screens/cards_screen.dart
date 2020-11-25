@@ -1,4 +1,4 @@
-import 'package:cargic_user/screens/add_cards_screen.dart';
+import 'package:cargic_user/screens/payment_screens/add_cards_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/bank_cards.dart';
 import 'package:flutter/material.dart';

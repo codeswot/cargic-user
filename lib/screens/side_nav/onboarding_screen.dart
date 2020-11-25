@@ -1,4 +1,4 @@
-import 'package:cargic_user/screens/login_method_screen.dart';
+import 'package:cargic_user/screens/side_nav/login_method_screen.dart';
 import 'package:cargic_user/widgets/onboarding_data.dart';
 import 'package:cargic_user/widgets/onboarding_widget.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:cargic_user/screens/cart_screen.dart';
-import 'package:cargic_user/screens/home_screen.dart';
-import 'package:cargic_user/screens/ninja_screen.dart';
-import 'package:cargic_user/screens/profile_screen.dart';
+import 'package:cargic_user/screens/bottom_nav_screens/cart_screen.dart';
+import 'package:cargic_user/screens/bottom_nav_screens/home_screen.dart';
+import 'package:cargic_user/screens/bottom_nav_screens/ninja_screen.dart';
+import 'package:cargic_user/screens/bottom_nav_screens/profile_screen.dart';
 import 'package:cargic_user/screens/side_nav/side_navigation.dart';
 import 'package:cargic_user/utils/cargic_icons_icons.dart';
 import 'package:cargic_user/utils/cargic_secondary_icons_icons.dart';
