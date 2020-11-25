@@ -1,6 +1,6 @@
 import 'package:cargic_user/helpers/authentication_helper.dart';
 import 'package:cargic_user/screens/navigation_screen.dart';
-import 'package:cargic_user/screens/side_nav/register_screen.dart';
+import 'package:cargic_user/screens/auth_screens/register_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/brand_logo.dart';
 import 'package:cargic_user/widgets/candy_button.dart';

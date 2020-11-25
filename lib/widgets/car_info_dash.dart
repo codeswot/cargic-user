@@ -1,3 +1,5 @@
+import 'package:cargic_user/screens/change_car_details_screens/add_new_vehicle_screen.dart';
+import 'package:cargic_user/screens/change_car_details_screens/change_vehicle_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +9,22 @@ class CarInfoDash extends StatelessWidget {
   const CarInfoDash({
     Key key,
     this.onTap,
+    this.carName,
+    this.fuelType,
+    this.carLogo,
   }) : super(key: key);
   final Function onTap;
+  final String carName;
+  final String fuelType;
+  final String carLogo;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        (carName != null && fuelType != null)
+            ? Navigator.of(context).pushNamed(ChangeVehicleScreen.id)
+            : Navigator.of(context).pushNamed(AddVehicleScreen.id);
+      },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8.0),
@@ -36,7 +48,9 @@ class CarInfoDash extends StatelessWidget {
                   shape: BoxShape.circle,
                   border:
                       Border.all(width: 2.5, color: CargicColors.smoothGray)),
-              child: CarLogo(carLogo: CarLogos.honda),
+              child: CarLogo(
+                  carLogo:
+                      (carLogo != null) ? carLogo : 'images/brand_logo.svg'),
             ),
             //car name and fuel type
             SizedBox(width: 11),
@@ -45,16 +59,16 @@ class CarInfoDash extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Honda Accord',
+                    (carName != null) ? carName : 'Tap to add your ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: CargicColors.pitchBlack,
-                      fontSize: 18,
+                      fontSize: (carName != null) ? 18 : 14,
                     ),
                   ),
                   SizedBox(height: 3),
                   Text(
-                    'Petrol',
+                    (fuelType != null) ? fuelType : 'vehicle',
                     style: TextStyle(
                       color: CargicColors.pitchBlack,
                       fontSize: 15,
@@ -67,7 +81,11 @@ class CarInfoDash extends StatelessWidget {
             Flexible(child: Container()),
             //change info button
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                (carName != null && fuelType != null)
+                    ? Navigator.of(context).pushNamed(ChangeVehicleScreen.id)
+                    : Navigator.of(context).pushNamed(AddVehicleScreen.id);
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
                 decoration: BoxDecoration(
@@ -83,7 +101,7 @@ class CarInfoDash extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Change',
+                    (carName != null && fuelType != null) ? 'Change' : 'Add',
                     style: TextStyle(color: CargicColors.grimBlack),
                   ),
                 ),

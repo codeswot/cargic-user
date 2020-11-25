@@ -1,6 +1,7 @@
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/banner_ads.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
+import 'package:cargic_user/widgets/car_logo.dart';
 import 'package:cargic_user/widgets/service_button_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CarInfoDash(),
+              CarInfoDash(
+                  //car info from DB
+                  //if return from DB as null, set
+                  //properties to null
+                  // carName: 'Honda Accord',
+                  // carLogo: CarLogos.honda,
+                  // fuelType: 'Electric',
+                  ),
               //Banner ads
               CargicBannerAds(
                 banners: [

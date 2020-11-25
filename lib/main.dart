@@ -1,6 +1,6 @@
 import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/routes/app_route.dart';
-import 'package:cargic_user/screens/side_nav/onboarding_screen.dart';
+import 'package:cargic_user/screens/auth_screens/onboarding_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
