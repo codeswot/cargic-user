@@ -9,6 +9,7 @@ class CarLogos {
   static String mercedes = 'images/mercedes_icon.svg';
   static String toyota = 'images/toyota_icon.svg';
   static String volvo = 'images/volvo_icon.svg';
+  static String ford = 'images/ford_icon.svg';
 }
 
 class CarLogo extends StatelessWidget {

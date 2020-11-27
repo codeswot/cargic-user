@@ -3,7 +3,7 @@ import 'package:cargic_user/screens/change_car_details_screens/change_vehicle_sc
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'car_logo.dart';
+import '../utils/car_logo.dart';
 
 class CarInfoDash extends StatelessWidget {
   const CarInfoDash({

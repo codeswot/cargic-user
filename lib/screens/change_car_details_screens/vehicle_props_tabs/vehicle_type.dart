@@ -2,6 +2,10 @@ import 'package:cargic_user/models/car_type_model.dart';
 import 'package:cargic_user/widgets/car_type_card.dart';
 import 'package:flutter/material.dart';
 
+int chosenCarType;
+String carTypeName;
+bool isCarTypeSelected = false;
+
 class VehicleType extends StatefulWidget {
   @override
   createState() {
@@ -10,69 +14,68 @@ class VehicleType extends StatefulWidget {
 }
 
 class VehicleTypeState extends State<VehicleType> {
-  int chosenCarType;
-  String carTypeName;
-  bool isSelected;
-
   List<CarTypeModel> sampleData = new List<CarTypeModel>();
 
   @override
   void initState() {
     super.initState();
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Car',
-          carTypeImage: 'images/car_yellow.svg'),
-    );
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Van',
-          carTypeImage: 'images/van.svg'),
-    );
+    setState(() {
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Car',
+            carTypeImage: 'images/car_yellow.svg'),
+      );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Van',
+            carTypeImage: 'images/van.svg'),
+      );
 
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Bus',
-          carTypeImage: 'images/school_buss.svg'),
-    );
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Truck',
-          carTypeImage: 'images/truck.svg'),
-    );
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Jeep',
-          carTypeImage: 'images/jeep_red.svg'),
-    );
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Tractor',
-          carTypeImage: 'images/tractor_blue.svg'),
-    );
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Bike',
-          carTypeImage: 'images/bike_red.svg'),
-    );
-    sampleData.add(
-      CarTypeModel(
-          isSelected: false,
-          carTypeName: 'Motorcycle',
-          carTypeImage: 'images/scooter_red.svg'),
-    );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Bus',
+            carTypeImage: 'images/school_buss.svg'),
+      );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Truck',
+            carTypeImage: 'images/truck.svg'),
+      );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Jeep',
+            carTypeImage: 'images/jeep_red.svg'),
+      );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Tractor',
+            carTypeImage: 'images/tractor_blue.svg'),
+      );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Bike',
+            carTypeImage: 'images/bike_red.svg'),
+      );
+      sampleData.add(
+        CarTypeModel(
+            isSelected: false,
+            carTypeName: 'Motorcycle',
+            carTypeImage: 'images/scooter_red.svg'),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      physics: NeverScrollableScrollPhysics(),
       padding: EdgeInsets.all(15),
       itemCount: sampleData.length,
       itemBuilder: (BuildContext context, int index) {
@@ -83,11 +86,11 @@ class VehicleTypeState extends State<VehicleType> {
                 sampleData.forEach((element) => element.isSelected = false);
                 sampleData[index].isSelected = true;
                 chosenCarType = index;
-                isSelected = sampleData[chosenCarType].isSelected;
+                isCarTypeSelected = sampleData[chosenCarType].isSelected;
                 carTypeName = sampleData[chosenCarType].carTypeName;
                 print('chosen car is $carTypeName');
 
-                print(isSelected);
+                print(isCarTypeSelected);
               });
             },
             child: CarTypeCard(

@@ -1,7 +1,7 @@
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/banner_ads.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
-import 'package:cargic_user/widgets/car_logo.dart';
+import 'package:cargic_user/utils/car_logo.dart';
 import 'package:cargic_user/widgets/service_button_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

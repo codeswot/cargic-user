@@ -1,7 +1,8 @@
+import 'package:cargic_user/screens/change_car_details_screens/vehicle_props_tabs/vehicle_brand.dart';
+import 'package:cargic_user/screens/change_car_details_screens/vehicle_props_tabs/vehicle_make_type.dart';
 import 'package:cargic_user/screens/change_car_details_screens/vehicle_props_tabs/vehicle_type.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ChooseVehiclePropsScreen extends StatefulWidget {
   static const id = 'ChooseVehiclePropsScreen';
@@ -12,21 +13,18 @@ class ChooseVehiclePropsScreen extends StatefulWidget {
 
 class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
     with TickerProviderStateMixin {
+  bool isClickable = isCarTypeSelected; //might wanna use provider
   int index = 0;
   TabController tabController;
 
   List<Widget> carPropsTabItem = [
     VehicleType(),
-    Container(),
-    Container(
-      child: Text('3'),
-    ),
-    Container(
-      child: Text('4'),
-    ),
+    VehicleBrand(),
+    VehicleMakeType(),
   ];
   @override
   void initState() {
+    // isClickable = isSelected;
     tabController = TabController(
         length: carPropsTabItem.length, initialIndex: 0, vsync: this);
     super.initState();
@@ -34,12 +32,15 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
 
   @override
   Widget build(BuildContext context) {
+    print('isClickable $isClickable ');
+
     return Scaffold(
       backgroundColor: CargicColors.faintWhite,
       appBar: AppBar(
         title: Text('Vehicle Type'),
         bottom: PreferredSize(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 height: 10,
@@ -66,13 +67,15 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
                     Tab(
                       child: Container(),
                     ),
-                    Tab(
-                      child: Container(),
-                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.only(left: 15),
+                child: Text('Choose vehicle type'),
+              ),
+              SizedBox(height: 20),
             ],
           ),
           preferredSize: Size.fromHeight(90),
@@ -90,7 +93,7 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
           GestureDetector(
             onTap: () {
               setState(() {
-                if (carPropsTabItem.length < 5) {
+                if (tabController.length < 4) {
                   tabController.index++;
                 } else {
                   return;
@@ -112,6 +115,8 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // (isClickable != null)?
+                  // (isClickable)?
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
                     decoration: BoxDecoration(
@@ -125,14 +130,19 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
                       ],
                     ),
                     child: Center(
-                        child: Text(
-                      'NEXT',
-                      style: TextStyle(
-                        color: CargicColors.plainWhite,
-                        fontWeight: FontWeight.bold,
+                      child: Text(
+                        'NEXT',
+                        style: TextStyle(
+                          color: CargicColors.plainWhite,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    )),
+                    ),
                   ),
+                  //     : Container(
+                  //         child: Text('nope'),
+                  //       )
+                  // : Container(),
                 ],
               ),
             ),
