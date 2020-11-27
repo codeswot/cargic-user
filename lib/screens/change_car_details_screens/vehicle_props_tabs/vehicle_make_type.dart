@@ -1,7 +1,8 @@
+import 'package:cargic_user/utils/car_make_fuel_type.dart';
 import 'package:cargic_user/utils/car_make_types.dart';
+import 'package:cargic_user/utils/car_make_year.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:cargic_user/widgets/custard_dropdown.dart';
 
 class VehicleMakeType extends StatelessWidget {
   const VehicleMakeType({
@@ -67,7 +68,7 @@ class VehicleMakeType extends StatelessWidget {
                 onChanged: (val) {
                   val = carModel;
                 },
-                items: getHondaModelList(),
+                items: getManufactureYear(),
               ),
             ),
             SizedBox(height: 26),
@@ -87,7 +88,7 @@ class VehicleMakeType extends StatelessWidget {
                 onChanged: (val) {
                   val = carModel;
                 },
-                items: getHondaModelList(),
+                items: getCarFuelType(),
               ),
             ),
           ],
