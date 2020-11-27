@@ -5,6 +5,6 @@ class CarNames {
   static String kia = 'KIA';
   static String mercedes = 'Mercedes Benz';
   static String toyota = 'Toyota';
-  static String volvo = 'Audi';
+  static String volvo = 'Volvo';
   static String ford = 'Ford';
 }

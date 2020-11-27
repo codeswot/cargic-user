@@ -92,6 +92,8 @@ class _VehicleBrandState extends State<VehicleBrand> {
                 chosenCarBrand = index;
                 carBrandName = sampleData[index].carBrandName;
                 isCarBrandSelected = sampleData[index].isSelected;
+                print('chosen car brand is $carBrandName');
+                print(isCarBrandSelected);
               });
             },
             child: CarBrandCard(
