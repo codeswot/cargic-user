@@ -1,6 +1,7 @@
 import 'package:cargic_user/screens/change_car_details_screens/add_new_vehicle_screen.dart';
 import 'package:cargic_user/screens/change_car_details_screens/change_vehicle_screen.dart';
 import 'package:cargic_user/screens/change_car_details_screens/choose_vehicle_pops_screen.dart';
+import 'package:cargic_user/screens/change_location_screen.dart';
 import 'package:cargic_user/screens/payment_screens/add_cards_screen.dart';
 import 'package:cargic_user/screens/payment_screens/cards_screen.dart';
 import 'package:cargic_user/screens/bottom_nav_screens/home_screen.dart';
@@ -21,4 +22,5 @@ Map<String, WidgetBuilder> appRoute = {
   AddVehicleScreen.id: (context) => AddVehicleScreen(),
   ChangeVehicleScreen.id: (context) => ChangeVehicleScreen(),
   ChooseVehiclePropsScreen.id: (context) => ChooseVehiclePropsScreen(),
+  ChangeLocationScreen.id: (context) => ChangeLocationScreen(),
 };

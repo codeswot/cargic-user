@@ -1,11 +1,11 @@
+import 'package:cargic_user/screens/change_location_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/banner_ads.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
-import 'package:cargic_user/utils/car_logo.dart';
+import 'package:cargic_user/widgets/location_card.dart';
 import 'package:cargic_user/widgets/service_button_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'HomeScreen';
@@ -42,46 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               //Location Button
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                margin: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: CargicColors.brandBlue,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      child: SvgPicture.asset(
-                        'images/pin_location_icon.svg',
-                        color: CargicColors.plainWhite,
-                        width: 15.5,
-                        height: 30.5,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Location for service',
-                          style: TextStyle(color: CargicColors.plainWhite),
-                        ),
-                        Text(
-                          'Ganga Bacci, Kaduna',
-                          style: TextStyle(color: CargicColors.plainWhite),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 10),
-                    Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: CargicColors.plainWhite,
-                    )
-                  ],
-                ),
+              LocationCard(
+                // location: '',
+                onTap: () {
+                  Navigator.of(context).pushNamed(ChangeLocationScreen.id);
+                },
               ),
               // Features Button Card
               Container(
@@ -96,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             serviceName: 'Car Wash',
                             serviceIcon: 'images/car_wash.svg',
                             serviceArrowColor: CargicColors.faintingGrey,
+                            onTap: () {},
                           ),
                         ),
                         SizedBox(width: 15.0),
