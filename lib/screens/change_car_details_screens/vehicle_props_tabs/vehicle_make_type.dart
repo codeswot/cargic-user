@@ -12,6 +12,8 @@ class VehicleMakeType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String carModel = '';
+    String manufactureYear = '';
+    String fuelType = '';
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(15),
@@ -66,7 +68,7 @@ class VehicleMakeType extends StatelessWidget {
                   border: InputBorder.none,
                 ),
                 onChanged: (val) {
-                  val = carModel;
+                  val = manufactureYear;
                 },
                 items: getManufactureYear(),
               ),
@@ -86,7 +88,7 @@ class VehicleMakeType extends StatelessWidget {
                   border: InputBorder.none,
                 ),
                 onChanged: (val) {
-                  val = carModel;
+                  val = fuelType;
                 },
                 items: getCarFuelType(),
               ),
