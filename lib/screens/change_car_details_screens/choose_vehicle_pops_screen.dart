@@ -26,7 +26,7 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
   void initState() {
     // isClickable = isSelected;
     tabController = TabController(
-        length: carPropsTabItem.length, initialIndex: 0, vsync: this);
+        length: carPropsTabItem.length, initialIndex: index, vsync: this);
     super.initState();
   }
 
@@ -90,34 +90,34 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
               children: carPropsTabItem,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                if (tabController.length < 4) {
-                  tabController.index++;
-                } else {
-                  return;
-                }
-              });
-            },
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: CargicColors.plainWhite,
-                boxShadow: [
-                  BoxShadow(
-                      color: CargicColors.cosmicShadow,
-                      blurRadius: 8,
-                      offset: Offset(0, 4)),
-                ],
-              ),
-              padding: EdgeInsets.symmetric(vertical: 50, horizontal: 45),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // (isClickable != null)?
-                  // (isClickable)?
-                  Container(
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: CargicColors.plainWhite,
+              boxShadow: [
+                BoxShadow(
+                    color: CargicColors.cosmicShadow,
+                    blurRadius: 8,
+                    offset: Offset(0, 4)),
+              ],
+            ),
+            padding: EdgeInsets.symmetric(vertical: 50, horizontal: 45),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // (isClickable != null)?
+                // (isClickable)?
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (tabController.length < 4) {
+                        tabController.index++;
+                      } else {
+                        return;
+                      }
+                    });
+                  },
+                  child: Container(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
                     decoration: BoxDecoration(
                       color: CargicColors.brandBlue,
@@ -139,12 +139,12 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
                       ),
                     ),
                   ),
-                  //     : Container(
-                  //         child: Text('nope'),
-                  //       )
-                  // : Container(),
-                ],
-              ),
+                ),
+                //     : Container(
+                //         child: Text('nope'),
+                //       )
+                // : Container(),
+              ],
             ),
           ),
         ],

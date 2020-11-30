@@ -1,3 +1,4 @@
+import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_screen.dart';
 import 'package:cargic_user/screens/change_location_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/banner_ads.dart';
@@ -61,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             serviceName: 'Car Wash',
                             serviceIcon: 'images/car_wash.svg',
                             serviceArrowColor: CargicColors.faintingGrey,
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed(CarWashScreen.id);
+                            },
                           ),
                         ),
                         SizedBox(width: 15.0),
