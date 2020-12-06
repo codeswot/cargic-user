@@ -2,7 +2,6 @@ import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_w
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_checkout_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_type_tab.dart';
 import 'package:cargic_user/utils/colors.dart';
-import 'package:cargic_user/widgets/app_bar_button.dart';
 import 'package:cargic_user/widgets/subtotal_card.dart';
 import 'package:flutter/material.dart';
 
@@ -16,21 +15,6 @@ class _CarWashScreenState extends State<CarWashScreen>
     with TickerProviderStateMixin {
   TabController tabController;
   int index = 0;
-  bool isBookNow = false;
-  bool isBookLater = false;
-  checkBookNow() {
-    setState(() {
-      isBookNow = true;
-      isBookLater = false;
-    });
-  }
-
-  checkBookLater() {
-    setState(() {
-      isBookNow = false;
-      isBookLater = true;
-    });
-  }
 
   indexController() {
     if (carWashTabs.length >= 3) {
@@ -48,8 +32,10 @@ class _CarWashScreenState extends State<CarWashScreen>
     CarWashBookingTab(),
     CarWashCheckOutTab(),
   ];
+
   @override
   void initState() {
+    setState(() {});
     tabController = TabController(
         length: carWashTabs.length, initialIndex: index, vsync: this);
     super.initState();
@@ -92,54 +78,17 @@ class _CarWashScreenState extends State<CarWashScreen>
                   ],
                 ),
               ),
-              SizedBox(height: (tabController.index == 1) ? 40 : 15),
+              SizedBox(height: (tabController.index == 1) ? 10 : 15),
               (tabController.index == 0)
                   ? Container(
                       padding: EdgeInsets.only(left: 15),
                       child: Text('Select carwash type'),
                     )
-                  : (tabController.index == 1)
-                      ? Container(
-                          margin: EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AppBarButton(
-                                buttonColor: (isBookNow)
-                                    ? CargicColors.brandBlue
-                                    : CargicColors.plainWhite,
-                                titleColor: (isBookNow)
-                                    ? CargicColors.plainWhite
-                                    : CargicColors.pitchBlack,
-                                buttonTitle: 'Book Now',
-                                onTap: () {
-                                  //get book now
-                                  checkBookNow();
-                                },
-                              ),
-                              SizedBox(width: 10),
-                              AppBarButton(
-                                buttonColor: (isBookLater)
-                                    ? CargicColors.brandBlue
-                                    : CargicColors.plainWhite,
-                                titleColor: (isBookLater)
-                                    ? CargicColors.plainWhite
-                                    : CargicColors.pitchBlack,
-                                buttonTitle: 'Book Later',
-                                onTap: () {
-                                  checkBookLater();
-                                  //get book later
-                                },
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(),
+                  : Container(),
               SizedBox(height: (tabController.index == 1) ? 0 : 20),
             ],
           ),
-          preferredSize:
-              Size.fromHeight((tabController.index == 1) ? 140 : 100),
+          preferredSize: Size.fromHeight((tabController.index == 1) ? 80 : 100),
         ),
       ),
       body: Container(
