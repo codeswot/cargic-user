@@ -1,7 +1,7 @@
 import 'package:cargic_user/models/date_picker_model.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/app_bar_button.dart';
-import 'package:cargic_user/widgets/tasty_month_picker.dart';
+import 'package:cargic_user/widgets/tasty_time_picker.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -32,94 +32,90 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
     });
   }
 
-  List<TastyMonthPickerModel> sampleData = new List<TastyMonthPickerModel>();
+  List<TastyTimePickerModel> sampleData = new List<TastyTimePickerModel>();
+  List<AmPm> amPmData = new List<AmPm>();
+
   @override
   void initState() {
     super.initState();
     setState(() {
       isNotBookSelect = true;
+      amPmData.add(
+        AmPm(timeOfDay: 'AM'),
+      );
+      amPmData.add(
+        AmPm(timeOfDay: 'PM'),
+      );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'January',
-          monthNumber: 01,
+          time: '12:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'Febuary',
-          monthNumber: 02,
+          time: '01:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'March',
-          monthNumber: 03,
+          time: '02:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'April',
-          monthNumber: 04,
+          time: '03:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'May',
-          monthNumber: 05,
+          time: '04:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'June',
-          monthNumber: 06,
+          time: '05:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'July',
-          monthNumber: 07,
+          time: '06:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'August',
-          monthNumber: 08,
+          time: '07:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'September',
-          monthNumber: 09,
+          time: '08:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'October',
-          monthNumber: 10,
+          time: '09:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'November',
-          monthNumber: 11,
+          time: '10:00',
         ),
       );
       sampleData.add(
-        TastyMonthPickerModel(
+        TastyTimePickerModel(
           isSelected: false,
-          monthName: 'December',
-          monthNumber: 12,
+          time: '11:00',
         ),
       );
     });
@@ -180,18 +176,60 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                   )
                 : Container(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Select Date'),
                         Container(
-                          height: 80,
+                          margin: EdgeInsets.symmetric(horizontal: 15),
+                          child: Text('Select Date'),
+                        ),
+                        SizedBox(height: 9),
+                        Container(
+                          child: DatePicker(
+                            DateTime.now(),
+                            initialSelectedDate: DateTime.now(),
+                            height: 90,
+                            onDateChange: (date) {
+                              print(date);
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 15),
+                          child: Text('Select Time'),
+                        ),
+                        SizedBox(height: 9),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 15),
+                          height: 65,
                           child: ListView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.symmetric(horizontal: 15),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  //get/price,name,discount
+                                  setState(() {
+                                    amPmData.forEach((element) =>
+                                        element.isSelected = false);
+                                    amPmData[index].isSelected = true;
+                                  });
+                                },
+                                child: AmPmCard(
+                                  timeOfDay: amPmData[index].timeOfDay,
+                                  isPicked: amPmData[index].isSelected,
+                                ),
+                              );
+                            },
+                            itemCount: amPmData.length,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          height: 90,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
                                   setState(() {
                                     sampleData.forEach((element) =>
                                         element.isSelected = false);
@@ -199,7 +237,7 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                                   });
                                 },
                                 child: TastyMonthPicker(
-                                  monthName: sampleData[index].monthName,
+                                  time: sampleData[index].time,
                                   isPicked: sampleData[index].isSelected,
                                 ),
                               );
@@ -207,14 +245,6 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                             itemCount: sampleData.length,
                           ),
                         ),
-                        // Container(
-                        //   child: DatePicker(
-                        //     DateTime.now(),
-                        //     initialSelectedDate: DateTime.now(),
-                        //     height: 90,
-                        //   ),
-                        // ),
-                        Text('false'),
                       ],
                     ),
                   ),

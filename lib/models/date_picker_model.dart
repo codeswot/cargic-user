@@ -1,11 +1,15 @@
-class TastyMonthPickerModel {
-  final String monthName;
-  final int monthNumber;
+class TastyTimePickerModel {
+  final String time;
   bool isSelected;
 
-  TastyMonthPickerModel({
-    this.monthName,
-    this.monthNumber,
+  TastyTimePickerModel({
+    this.time,
     this.isSelected,
   });
+}
+
+class AmPm {
+  final String timeOfDay;
+  bool isSelected;
+  AmPm({this.timeOfDay});
 }
