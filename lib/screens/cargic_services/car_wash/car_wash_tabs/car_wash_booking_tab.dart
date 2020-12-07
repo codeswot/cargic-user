@@ -41,10 +41,10 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
     setState(() {
       isNotBookSelect = true;
       amPmData.add(
-        AmPm(timeOfDay: 'AM'),
+        AmPm(timeOfDay: 'AM', isSelected: false),
       );
       amPmData.add(
-        AmPm(timeOfDay: 'PM'),
+        AmPm(timeOfDay: 'PM', isSelected: false),
       );
       sampleData.add(
         TastyTimePickerModel(
@@ -169,6 +169,7 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
         child: (isNotBookSelect)
             ? Container()
             : (isBookNow)
+                //controll to next tab
                 ? Container(
                     child: Center(
                       child: CircularProgressIndicator(),
@@ -180,7 +181,10 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                       children: [
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 15),
-                          child: Text('Select Date'),
+                          child: Text(
+                            'Select Date',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(height: 9),
                         Container(
@@ -188,6 +192,7 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                             DateTime.now(),
                             initialSelectedDate: DateTime.now(),
                             height: 90,
+                            selectedTextColor: CargicColors.brandBlue,
                             onDateChange: (date) {
                               print(date);
                             },
@@ -196,11 +201,13 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                         SizedBox(height: 15),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 15),
-                          child: Text('Select Time'),
+                          child: Text(
+                            'Select Time',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(height: 9),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 15),
                           height: 65,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -222,7 +229,6 @@ class _CarWashBookingTabState extends State<CarWashBookingTab> {
                             itemCount: amPmData.length,
                           ),
                         ),
-                        SizedBox(height: 15),
                         Container(
                           height: 90,
                           child: ListView.builder(

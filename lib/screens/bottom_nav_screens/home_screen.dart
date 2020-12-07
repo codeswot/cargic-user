@@ -25,13 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               CarInfoDash(
-                  //car info from DB
-                  //if return from DB as null, set
-                  //properties to null
-                  // carName: 'Honda Accord',
-                  // carLogo: CarLogos.honda,
-                  // fuelType: 'Electric',
-                  ),
+                isShaddow: true,
+                //car info from DB
+                //if return from DB as null, set
+                //properties to null
+                // carName: 'Honda Accord',
+                // carLogo: CarLogos.honda,
+                // fuelType: 'Electric',
+              ),
               //Banner ads
               CargicBannerAds(
                 banners: [

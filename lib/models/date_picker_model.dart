@@ -11,5 +11,5 @@ class TastyTimePickerModel {
 class AmPm {
   final String timeOfDay;
   bool isSelected;
-  AmPm({this.timeOfDay});
+  AmPm({this.timeOfDay, this.isSelected});
 }

@@ -4,6 +4,7 @@ class CargicColors {
   static const Color brandBlue = Color(0xff003891); //primary color
   static const Color hopeBlue = Color(0xff3f51b5); //accent buttons
   static const Color wackoBlue = Color(0xff003890);
+  static const Color sweetBlue = Color(0xff212f49);
   static const Color smoothGray = Color(0xff707070);
   static const Color fairGrey = Color(0xff4d4d4d);
   static const Color plainWhite = Color(0xffffffff);

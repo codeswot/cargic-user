@@ -12,11 +12,13 @@ class CarInfoDash extends StatelessWidget {
     this.carName,
     this.fuelType,
     this.carLogo,
+    this.isShaddow,
   }) : super(key: key);
   final Function onTap;
   final String carName;
   final String fuelType;
   final String carLogo;
+  final bool isShaddow;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,11 +34,15 @@ class CarInfoDash extends StatelessWidget {
           color: CargicColors.plainWhite,
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
-            BoxShadow(
-              color: CargicColors.cosmicShadow,
-              blurRadius: 5.0,
-              offset: Offset(0.0, 2.5),
-            ),
+            (isShaddow != null)
+                ? (isShaddow)
+                    ? BoxShadow(
+                        color: CargicColors.cosmicShadow,
+                        blurRadius: 5.0,
+                        offset: Offset(0.0, 2.5),
+                      )
+                    : BoxShadow(color: Colors.transparent)
+                : BoxShadow(color: Colors.transparent),
           ],
         ),
         child: Row(
