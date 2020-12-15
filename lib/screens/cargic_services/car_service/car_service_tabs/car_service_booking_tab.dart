@@ -2,16 +2,14 @@ import 'package:cargic_user/screens/cargic_services/car_service_booking_type/car
 import 'package:cargic_user/screens/cargic_services/car_service_booking_type/car_wash_book_now.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/app_bar_button.dart';
-
 import 'package:flutter/material.dart';
 
-class CarWashBookingTab extends StatefulWidget {
-  const CarWashBookingTab();
+class CarServiceBookingTab extends StatefulWidget {
   @override
-  _CarWashBookingTabState createState() => _CarWashBookingTabState();
+  _CarServiceBookingTabState createState() => _CarServiceBookingTabState();
 }
 
-class _CarWashBookingTabState extends State<CarWashBookingTab> {
+class _CarServiceBookingTabState extends State<CarServiceBookingTab> {
   bool isBookNow = false;
   bool isBookLater = false;
   bool isNotBookSelect = true;

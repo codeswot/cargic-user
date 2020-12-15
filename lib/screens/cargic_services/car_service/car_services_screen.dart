@@ -1,4 +1,6 @@
-import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_type.dart';
+import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_booking_tab.dart';
+import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_check_out_tab.dart';
+import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_type_tab.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/subtotal_card.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +29,8 @@ class _CarServiceScreenState extends State<CarServiceScreen>
 
   List<Widget> carServiceTabs = [
     CarServiceTypeTab(),
-    Container(),
-    Container(),
+    CarServiceBookingTab(),
+    CarServiceCheckOutTab(),
   ];
   @override
   void initState() {
