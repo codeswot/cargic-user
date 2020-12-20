@@ -1,3 +1,4 @@
+import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_services_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_screen.dart';
 import 'package:cargic_user/screens/change_car_details_screens/add_new_vehicle_screen.dart';
@@ -27,4 +28,5 @@ Map<String, WidgetBuilder> appRoute = {
   ChangeLocationScreen.id: (context) => ChangeLocationScreen(),
   CarWashScreen.id: (context) => CarWashScreen(),
   CarServiceScreen.id: (context) => CarServiceScreen(),
+  CarRegRenewal.id: (context) => CarRegRenewal(),
 };

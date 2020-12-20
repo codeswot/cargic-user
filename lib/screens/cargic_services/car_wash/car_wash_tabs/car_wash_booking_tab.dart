@@ -1,5 +1,5 @@
-import 'package:cargic_user/screens/cargic_services/car_service_booking_type/car_wash_book_later.dart';
-import 'package:cargic_user/screens/cargic_services/car_service_booking_type/car_wash_book_now.dart';
+import 'package:cargic_user/screens/cargic_services/car_services_booking_type/car_wash_book_later.dart';
+import 'package:cargic_user/screens/cargic_services/car_services_booking_type/car_wash_book_now.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/app_bar_button.dart';
 

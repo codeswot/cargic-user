@@ -7,7 +7,9 @@ class SubTotalCard extends StatelessWidget {
     Key key,
     this.price,
     this.onTap,
+    this.isSubTotal,
   }) : super(key: key);
+  final bool isSubTotal;
   final String price;
   final Function onTap;
   @override
@@ -22,7 +24,11 @@ class SubTotalCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('subtotal'),
+                Text((isSubTotal == null)
+                    ? ''
+                    : (isSubTotal)
+                        ? "subtotal"
+                        : ""),
                 Row(
                   children: [
                     Text((price != null) ? '$nigerianCurrency' : ''),
