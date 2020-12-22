@@ -1,5 +1,4 @@
 import 'package:cargic_user/models/car_brand_model.dart';
-import 'package:cargic_user/screens/change_car_details_screens/vehicle_props_tabs/vehicle_type.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

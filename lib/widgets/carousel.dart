@@ -305,6 +305,7 @@ class CarouselState extends State<Carousel> {
 
     if (left == null && right == null) {
       left = right = 0.0;
+      print("$bottom, $top,");
     }
 
     return Stack(

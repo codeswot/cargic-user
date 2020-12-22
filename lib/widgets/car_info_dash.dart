@@ -13,12 +13,14 @@ class CarInfoDash extends StatelessWidget {
     this.fuelType,
     this.carLogo,
     this.isShaddow,
+    this.isBorder,
   }) : super(key: key);
   final Function onTap;
   final String carName;
   final String fuelType;
   final String carLogo;
   final bool isShaddow;
+  final bool isBorder;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,11 +30,30 @@ class CarInfoDash extends StatelessWidget {
             : Navigator.of(context).pushNamed(AddVehicleScreen.id);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: EdgeInsets.symmetric(
+          horizontal: (isBorder != null)
+              ? (isBorder)
+                  ? 0
+                  : 15
+              : 15,
+          vertical: (isBorder != null)
+              ? (isBorder)
+                  ? 0
+                  : 10
+              : 10,
+        ),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8.0),
         decoration: BoxDecoration(
           color: CargicColors.plainWhite,
           borderRadius: BorderRadius.circular(5),
+          border: (isBorder != null)
+              ? (isBorder)
+                  ? Border.all(
+                      width: 1.5,
+                      color: CargicColors.boringWhite,
+                    )
+                  : Border.all(color: Colors.transparent)
+              : Border.all(color: Colors.transparent),
           boxShadow: [
             (isShaddow != null)
                 ? (isShaddow)

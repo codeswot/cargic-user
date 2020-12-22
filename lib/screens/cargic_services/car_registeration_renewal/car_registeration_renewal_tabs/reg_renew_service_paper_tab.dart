@@ -1,3 +1,4 @@
+import 'package:cargic_user/widgets/car_info_dash.dart';
 import 'package:flutter/material.dart';
 
 class RegRenewSelectPapersTab extends StatefulWidget {
@@ -13,6 +14,20 @@ class RegRenewSelectPapersTab extends StatefulWidget {
 class _RegRenewSelectPapersTabState extends State<RegRenewSelectPapersTab> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [
+          CarInfoDash(
+            isBorder: true,
+            isShaddow: false,
+          ),
+          Flexible(
+            child: ListView.builder(itemBuilder: (context, index) {
+              return Container();
+            }),
+          ),
+        ],
+      ),
+    );
   }
 }
