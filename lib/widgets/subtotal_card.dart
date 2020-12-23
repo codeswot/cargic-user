@@ -8,10 +8,12 @@ class SubTotalCard extends StatelessWidget {
     this.price,
     this.onTap,
     this.isSubTotal,
+    this.buttonTitle,
   }) : super(key: key);
   final bool isSubTotal;
   final String price;
   final Function onTap;
+  final String buttonTitle;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,7 +56,7 @@ class SubTotalCard extends StatelessWidget {
                   ],
                 ),
                 child: Text(
-                  'Next',
+                  (buttonTitle != null) ? buttonTitle : 'Next',
                   style: TextStyle(
                     color: CargicColors.plainWhite,
                     fontSize: 13,

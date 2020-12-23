@@ -1,3 +1,4 @@
+import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_tabs/reg_renew_service_checkout.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_tabs/reg_renew_service_paper_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_tabs/reg_renew_service_type_tab.dart';
 import 'package:cargic_user/utils/colors.dart';
@@ -14,12 +15,18 @@ class _CarRegRenewalState extends State<CarRegRenewal>
     with TickerProviderStateMixin {
   TabController tabController;
   int index = 0;
+  String buttonTitle = 'Next';
 
   indexController() {
     if (carRegRenewTabs.length >= 3) {
       setState(() {
         tabController.index++;
         index++;
+        if (tabController.index == 2) {
+          setState(() {
+            buttonTitle = "Pay";
+          });
+        }
       });
     } else {
       print('end of tab');
@@ -29,7 +36,7 @@ class _CarRegRenewalState extends State<CarRegRenewal>
   List<Widget> carRegRenewTabs = [
     RegRenewServiceTypeTab(),
     RegRenewSelectPapersTab(),
-    Container(),
+    RegRenewCheckOut(),
   ];
   @override
   void initState() {
@@ -104,6 +111,7 @@ class _CarRegRenewalState extends State<CarRegRenewal>
               //set price from selected card
               // price: '',
               //for now
+              buttonTitle: buttonTitle,
               onTap: indexController,
             ),
           ],
