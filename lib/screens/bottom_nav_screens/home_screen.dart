@@ -1,3 +1,4 @@
+import 'package:cargic_user/screens/cargic_services/car_modification/car_modification_request_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_services_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_screen.dart';
@@ -104,6 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             secondNameInfo: '(Modification)',
                             serviceIcon: 'images/car_upgrade.svg',
                             serviceArrowColor: CargicColors.faintingGrey,
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(CarModificationRequest.id);
+                            },
                           ),
                         ),
                       ],
