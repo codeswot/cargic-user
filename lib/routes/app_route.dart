@@ -1,4 +1,5 @@
 import 'package:cargic_user/screens/cargic_services/car_modification/car_modification_request_screen.dart';
+import 'package:cargic_user/screens/cargic_services/car_parts/car_parts_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_request_accepted_screens/services_requested_map.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_services_screen.dart';
@@ -33,4 +34,5 @@ Map<String, WidgetBuilder> appRoute = {
   CarRegRenewal.id: (context) => CarRegRenewal(),
   CarModificationRequest.id: (context) => CarModificationRequest(),
   ServiceRequestMap.id: (context) => ServiceRequestMap(),
+  CarPartsScreen.id: (context) => CarPartsScreen(),
 };

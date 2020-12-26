@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/bouncing_ripple_loader.dart';
 import 'package:cargic_user/widgets/cargicMaps.dart';
 import 'package:cargic_user/widgets/map_cancel_button.dart';
 import 'package:cargic_user/widgets/request_service_provider_card.dart';
 import 'package:cargic_user/widgets/service_request_dash.dart';
-import 'package:cargic_user/widgets/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
 
 class ServiceRequestMap extends StatefulWidget {

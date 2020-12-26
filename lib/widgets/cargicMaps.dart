@@ -15,7 +15,7 @@ class CargicMap extends StatefulWidget {
 
 class _CargicMapState extends State<CargicMap> {
   Completer<GoogleMapController> _completer = Completer();
-  GoogleMapController _googleMapController;
+  GoogleMapController googleMapController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _CargicMapState extends State<CargicMap> {
             ),
       onMapCreated: (GoogleMapController controller) {
         _completer.complete(controller);
-        _googleMapController = controller;
+        googleMapController = controller;
       },
       mapType: MapType.normal,
       myLocationEnabled: true,
