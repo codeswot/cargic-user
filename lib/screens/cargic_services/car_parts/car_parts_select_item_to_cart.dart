@@ -1,6 +1,8 @@
 import 'package:cargic_user/models/cart_item_model.dart';
 import 'package:cargic_user/utils/colors.dart';
+import 'package:cargic_user/utils/global_variables.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
+import 'package:cargic_user/widgets/cart_button.dart';
 import 'package:cargic_user/widgets/cart_item_card.dart';
 import 'package:flutter/material.dart';
 
@@ -63,11 +65,8 @@ class _SelectItemToCartState extends State<SelectItemToCart> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.shopping_cart_outlined,
-            ),
-            onPressed: () {},
+          CartButton(
+            itemCount: cartItemMock,
           ),
         ],
         bottom: PreferredSize(

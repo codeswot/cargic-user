@@ -1,6 +1,8 @@
 import 'package:cargic_user/screens/cargic_services/car_parts/car_parts_select_item_to_cart.dart';
 import 'package:cargic_user/utils/colors.dart';
+import 'package:cargic_user/utils/global_variables.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
+import 'package:cargic_user/widgets/cart_button.dart';
 import 'package:cargic_user/widgets/select_car_part_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -41,11 +43,8 @@ class _CarPartsSelectedCategoryState extends State<CarPartsSelectedCategory> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.shopping_cart_outlined,
-            ),
-            onPressed: () {},
+          CartButton(
+            itemCount: cartItemMock,
           ),
         ],
         bottom: PreferredSize(
