@@ -1,7 +1,6 @@
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_tabs/reg_renew_service_checkout.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_tabs/reg_renew_service_paper_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_tabs/reg_renew_service_type_tab.dart';
-import 'package:cargic_user/screens/cargic_services/car_services_order_screens/car_service_purchase_order.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/subtotal_card.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +33,8 @@ class _CarRegRenewalState extends State<CarRegRenewal>
     }
   }
 
-  navigateTo() {
-    Navigator.of(context).pushNamed(PurchaseOrderScreen.id);
+  processPayment() {
+    print('Paid');
   }
 
   List<Widget> carRegRenewTabs = [
@@ -117,7 +116,7 @@ class _CarRegRenewalState extends State<CarRegRenewal>
               // price: '',
               //for now
               buttonTitle: buttonTitle,
-              onTap: (isDone) ? navigateTo : indexController,
+              onTap: (isDone) ? processPayment : indexController,
             ),
           ],
         ),

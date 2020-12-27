@@ -18,6 +18,7 @@ class TrackOrderTimeLine extends StatefulWidget {
     this.orderAssingnedColor,
     this.orderAssignedLineColor,
     this.orderStatusColor,
+    this.isAssigned,
   }) : super(key: key);
   final Function onTap;
   final String serviceName;
@@ -29,6 +30,7 @@ class TrackOrderTimeLine extends StatefulWidget {
   final Color orderProcessLinColor;
   final Color orderAssingnedColor;
   final Color orderAssignedLineColor;
+  final bool isAssigned;
   Color orderStatusColor;
 
   @override
@@ -57,7 +59,7 @@ class _TrackOrderTimeLineState extends State<TrackOrderTimeLine> {
         children: [
           Container(
             width: double.infinity,
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
             decoration: BoxDecoration(
               color: CargicColors.plainWhite,
               borderRadius: BorderRadius.circular(5),
@@ -227,8 +229,14 @@ class _TrackOrderTimeLineState extends State<TrackOrderTimeLine> {
                         )
                       ],
                     ),
-                    TrackOrderNextButton(
-                      onTap: () {},
+                    Container(
+                      child: (widget.isAssigned != null)
+                          ? (widget.isAssigned)
+                              ? TrackOrderNextButton(
+                                  onTap: widget.onTap,
+                                )
+                              : Container()
+                          : Container(),
                     )
                   ],
                 ),

@@ -15,6 +15,7 @@ class RequestedServiceProviderCard extends StatelessWidget {
     this.serviceProviderAddedInfo,
     this.onSecondaryTap,
     this.secondaryButtonIcon,
+    this.secondaryButtonTitle,
   }) : super(key: key);
   final String profilePic;
   final String serviceProviderName;
@@ -24,6 +25,7 @@ class RequestedServiceProviderCard extends StatelessWidget {
   final Function onCallTap;
   final Function onSecondaryTap;
   final IconData secondaryButtonIcon;
+  final String secondaryButtonTitle;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -127,7 +129,9 @@ class RequestedServiceProviderCard extends StatelessWidget {
                   icon: (secondaryButtonIcon != null)
                       ? secondaryButtonIcon
                       : Icons.directions,
-                  buttonTitle: 'Direction',
+                  buttonTitle: (secondaryButtonTitle != null)
+                      ? secondaryButtonTitle
+                      : 'Direction',
                   onTap: onSecondaryTap,
                 ),
               ],

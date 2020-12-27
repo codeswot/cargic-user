@@ -3,7 +3,9 @@ import 'package:cargic_user/screens/cargic_services/car_parts/car_parts_screen.d
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_request_accepted_screens/services_requested_map.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_services_screen.dart';
+import 'package:cargic_user/screens/cargic_services/car_services_order_screens/car_service_confirm_payment.dart';
 import 'package:cargic_user/screens/cargic_services/car_services_order_screens/car_service_purchase_order.dart';
+import 'package:cargic_user/screens/cargic_services/car_services_order_screens/track_order_map.dart';
 import 'package:cargic_user/screens/cargic_services/car_services_order_screens/track_order_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_screen.dart';
 import 'package:cargic_user/screens/change_car_details_screens/add_new_vehicle_screen.dart';
@@ -39,4 +41,6 @@ Map<String, WidgetBuilder> appRoute = {
   CarPartsScreen.id: (context) => CarPartsScreen(),
   PurchaseOrderScreen.id: (context) => PurchaseOrderScreen(),
   TrackOrderScreen.id: (context) => TrackOrderScreen(),
+  TrackOrderMap.id: (context) => TrackOrderMap(),
+  ConfirmPaymentScreen.id: (context) => ConfirmPaymentScreen(),
 };
