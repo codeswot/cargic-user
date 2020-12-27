@@ -1,3 +1,4 @@
+import 'package:cargic_user/screens/cargic_services/car_services_order_screens/car_service_purchase_order.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_booking_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_checkout_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_type_tab.dart';
@@ -15,16 +16,26 @@ class _CarWashScreenState extends State<CarWashScreen>
     with TickerProviderStateMixin {
   TabController tabController;
   int index = 0;
-
+  String buttonTitle = 'Next';
+  bool isDone = false;
   indexController() {
-    if (carWashTabs.length >= 3) {
+    setState(() {
+      tabController.index++;
+      index++;
+    });
+    if (tabController.index == 2) {
       setState(() {
-        tabController.index++;
-        index++;
+        buttonTitle = "Done";
+        isDone = true;
       });
-    } else {
       print('end of tab');
+    } else {
+      return;
     }
+  }
+
+  navigateTo() {
+    Navigator.of(context).pushNamed(PurchaseOrderScreen.id);
   }
 
   List<Widget> carWashTabs = [
@@ -102,10 +113,11 @@ class _CarWashScreenState extends State<CarWashScreen>
               ),
             ),
             SubTotalCard(
+              buttonTitle: buttonTitle,
               //set price from selected card
               price: '300',
               //for now
-              onTap: indexController,
+              onTap: (isDone) ? navigateTo : indexController,
             ),
           ],
         ),

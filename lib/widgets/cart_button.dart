@@ -1,6 +1,7 @@
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CartButton extends StatelessWidget {
   CartButton({
     Key key,

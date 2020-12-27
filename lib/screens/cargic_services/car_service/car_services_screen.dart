@@ -1,6 +1,7 @@
 import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_booking_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_check_out_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_type_tab.dart';
+import 'package:cargic_user/screens/cargic_services/car_services_order_screens/car_service_purchase_order.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/subtotal_card.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +16,26 @@ class _CarServiceScreenState extends State<CarServiceScreen>
     with TickerProviderStateMixin {
   TabController tabController;
   int index = 0;
-
+  String buttonTitle = 'Next';
+  bool isDone = false;
   indexController() {
-    if (carServiceTabs.length >= 3) {
+    setState(() {
+      tabController.index++;
+      index++;
+    });
+    if (tabController.index == 2) {
       setState(() {
-        tabController.index++;
-        index++;
+        buttonTitle = "Done";
+        isDone = true;
       });
-    } else {
       print('end of tab');
+    } else {
+      return;
     }
+  }
+
+  navigateTo() {
+    Navigator.of(context).pushNamed(PurchaseOrderScreen.id);
   }
 
   List<Widget> carServiceTabs = [
@@ -100,7 +111,8 @@ class _CarServiceScreenState extends State<CarServiceScreen>
               //set price from selected card
               price: '300',
               //for now
-              onTap: indexController,
+              buttonTitle: buttonTitle,
+              onTap: (isDone) ? navigateTo : indexController,
             ),
           ],
         ),
