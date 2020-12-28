@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/selected_services_model.dart';
+import 'package:cargic_user/models/front_end_models/selected_services_model.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/check_out_container.dart';
 import 'package:cargic_user/widgets/check_out_credit_card.dart';

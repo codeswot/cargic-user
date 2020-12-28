@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/car_wash_service_model.dart';
+import 'package:cargic_user/models/front_end_models/car_wash_service_model.dart';
 import 'package:cargic_user/widgets/car_wash_service_card.dart';
 import 'package:flutter/material.dart';
 

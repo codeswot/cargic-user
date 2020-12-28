@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/date_picker_model.dart';
+import 'package:cargic_user/models/front_end_models/date_picker_model.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/tasty_time_picker.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';

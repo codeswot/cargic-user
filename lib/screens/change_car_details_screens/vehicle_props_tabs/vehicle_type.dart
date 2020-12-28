@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/car_type_model.dart';
+import 'package:cargic_user/models/front_end_models/car_type_model.dart';
 import 'package:cargic_user/widgets/car_type_card.dart';
 import 'package:flutter/material.dart';
 

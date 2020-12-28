@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/serviceTypeModel.dart';
+import 'package:cargic_user/models/front_end_models/serviceTypeModel.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/utils/global_variables.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/cart_item_model.dart';
+import 'package:cargic_user/models/front_end_models/cart_item_model.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/utils/global_variables.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';

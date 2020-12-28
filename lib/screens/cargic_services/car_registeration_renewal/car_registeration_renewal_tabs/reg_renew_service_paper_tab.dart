@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/car_renew_tile_model.dart';
+import 'package:cargic_user/models/front_end_models/car_renew_tile_model.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
 import 'package:cargic_user/widgets/car_renew_select_tile.dart';
 import 'package:flutter/material.dart';

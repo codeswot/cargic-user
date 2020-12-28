@@ -1,4 +1,4 @@
-import 'package:cargic_user/models/car_brand_model.dart';
+import 'package:cargic_user/models/front_end_models/car_brand_model.dart';
 import 'package:cargic_user/utils/car_logo.dart';
 import 'package:cargic_user/utils/car_names.dart';
 import 'package:cargic_user/widgets/car_brand_card.dart';
