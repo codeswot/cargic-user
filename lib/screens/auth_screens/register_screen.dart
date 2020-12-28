@@ -1,8 +1,10 @@
 import 'package:cargic_user/helpers/authentication_helper.dart';
 import 'package:cargic_user/screens/auth_screens/login_with_email_screen.dart';
+import 'package:cargic_user/screens/navigation_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/brand_logo.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
+import 'package:cargic_user/widgets/progress_dialog.dart';
 import 'package:cargic_user/widgets/sweet_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -16,30 +18,79 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _fullNameController = TextEditingController();
+  // TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   AuthHelper _authHelper = AuthHelper();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isObsecure = true;
+  void showSnackbar({String message}) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 15),
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  registerUser() {
+    //do input validation here
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => ProgressDialoger(
+        message: 'Signin Up ...',
+      ),
+    );
+    _authHelper
+        .regsterUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      fullName: _fullNameController.text,
+      // lastName: _lastNameController.text,
+      phone: _phoneController.text,
+    )
+        .then((value) {
+      Navigator.of(context).pop();
+
+      if (value == 'weak-password') {
+        print('The password provided is too weak.');
+        showSnackbar(message: 'The password provided is too weak.');
+      } else if (value == 'email-already-in-use') {
+        print('The account already exists for that email.');
+        showSnackbar(message: 'The account already exists for that email.');
+      } else {
+        Navigator.of(context).popAndPushNamed(NavigationScreen.id);
+      }
+    });
+  }
+
+  toggleObsecure() {
+    setState(() {
+      isObsecure = !isObsecure;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BrandLogo(),
+              BrandLogo(
+                width: 80,
+                height: 80,
+              ),
               Container(
-                margin: EdgeInsets.only(
-                  left: 30.0,
-                  right: 30.0,
-                ),
-                padding: EdgeInsets.only(
-                  left: 27.0,
-                  right: 27.0,
-                  top: 52.0,
-                  bottom: 52.0,
-                ),
+                margin: EdgeInsets.symmetric(horizontal: 30.0),
+                padding: EdgeInsets.symmetric(horizontal: 27.0, vertical: 15.0),
                 decoration: BoxDecoration(
                   color: CargicColors.plainWhite,
                   borderRadius: BorderRadius.circular(10),
@@ -63,24 +114,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         print('google');
                       },
                     ),
+
                     SizedBox(height: 21.0),
+                    SweetTextField(
+                      controller: _fullNameController,
+                      obsecureText: false,
+                      leadingIcon: Icons.person,
+                      hintText: 'Full Name',
+                    ),
+                    SizedBox(height: 20),
+
                     SweetTextField(
                       controller: _emailController,
                       obsecureText: false,
+                      keyBoardType: TextInputType.emailAddress,
+                      textCapitalization: TextCapitalization.none,
                       leadingIcon: Icons.email,
                       hintText: 'Email',
+                    ),
+
+                    // SizedBox(height: 20),
+                    // SweetTextField(
+                    //   controller: _lastNameController,
+                    //   obsecureText: false,
+                    //   leadingIcon: Icons.person,
+                    //   hintText: 'Last Name',
+                    // ),
+                    SizedBox(height: 20),
+                    SweetTextField(
+                      controller: _phoneController,
+                      obsecureText: false,
+                      keyBoardType: TextInputType.phone,
+                      leadingIcon: Icons.phone,
+                      hintText: 'phone',
                     ),
                     SizedBox(height: 20),
                     SweetTextField(
                       controller: _passwordController,
-                      obsecureText: true,
+                      obsecureText: isObsecure,
+                      toggleObsecure: toggleObsecure,
                       leadingIcon: Icons.lock,
                       trailinIcon: Icons.visibility,
                       hintText: 'Password',
                     ),
                     SizedBox(height: 20),
                     SweetTextField(
-                      obsecureText: true,
+                      obsecureText: isObsecure,
+                      toggleObsecure: toggleObsecure,
                       leadingIcon: Icons.lock,
                       trailinIcon: Icons.visibility,
                       hintText: 'Confirm Password',
@@ -90,17 +170,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       buttonColor: CargicColors.hopeBlue,
                       titleColor: CargicColors.plainWhite,
                       title: 'Create',
-                      onPressed: () {
-                        _authHelper.regsterUser(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
-                      },
+                      onPressed: registerUser,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               InkWell(
                 onTap: () {
                   Navigator.of(context)
@@ -117,6 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),

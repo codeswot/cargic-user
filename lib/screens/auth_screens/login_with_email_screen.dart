@@ -1,22 +1,77 @@
 import 'package:cargic_user/helpers/authentication_helper.dart';
-import 'package:cargic_user/screens/navigation_screen.dart';
 import 'package:cargic_user/screens/auth_screens/register_screen.dart';
+import 'package:cargic_user/screens/navigation_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/brand_logo.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
+import 'package:cargic_user/widgets/progress_dialog.dart';
 import 'package:cargic_user/widgets/sweet_text_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginWithEmailScreen extends StatelessWidget {
+class LoginWithEmailScreen extends StatefulWidget {
   static const String id = 'LoginWithEmailScreen';
 
   @override
-  Widget build(BuildContext context) {
-    AuthHelper _authHelper = AuthHelper();
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
+  _LoginWithEmailScreenState createState() => _LoginWithEmailScreenState();
+}
 
+class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
+  AuthHelper _authHelper = AuthHelper();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool isObsecure = true;
+  void showSnackbar({String message}) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 15),
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  loginUser() {
+    //do validation here
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => ProgressDialoger(
+        message: 'Logging you in ...',
+      ),
+    );
+    _authHelper
+        .loginUser(
+            email: _emailController.text,
+            password: _passwordController.text,
+            context: context)
+        .then((value) {
+      Navigator.of(context).pop();
+
+      if (value == 'user-not-found') {
+        print('No user found for that email.');
+        showSnackbar(message: 'No user found for that email.');
+      } else if (value == 'wrong-password') {
+        print('Wrong password provided for that user.');
+        showSnackbar(message: 'Wrong password provided for that user.');
+      } else {
+        Navigator.of(context).popAndPushNamed(NavigationScreen.id);
+      }
+    });
+  }
+
+  toggleObsecure() {
+    setState(() {
+      isObsecure = !isObsecure;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -48,6 +103,8 @@ class LoginWithEmailScreen extends StatelessWidget {
                       SweetTextField(
                         controller: _emailController,
                         obsecureText: false,
+                        textCapitalization: TextCapitalization.none,
+                        keyBoardType: TextInputType.emailAddress,
                         hintText: 'Email',
                         leadingIcon: Icons.email,
                         // trailinIcon: Icons.add,
@@ -55,19 +112,16 @@ class LoginWithEmailScreen extends StatelessWidget {
                       SizedBox(height: 20),
                       SweetTextField(
                         controller: _passwordController,
-                        obsecureText: true,
+                        textCapitalization: TextCapitalization.none,
+                        obsecureText: isObsecure,
+                        toggleObsecure: toggleObsecure,
                         hintText: 'Password',
                         leadingIcon: Icons.lock,
                         trailinIcon: Icons.visibility,
                       ),
                       SizedBox(height: 16.5),
                       InkWell(
-                        onTap: () {
-                          _authHelper.loginUser(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                        },
+                        onTap: () {},
                         child: Text(
                           'Forgot password?',
                           style: TextStyle(
@@ -82,13 +136,7 @@ class LoginWithEmailScreen extends StatelessWidget {
                         buttonColor: CargicColors.hopeBlue,
                         titleColor: CargicColors.plainWhite,
                         title: 'Login',
-                        onPressed: () {
-                          // _authHelper.loginUser(
-                          //     email: _emailController.text,
-                          //     password: _passwordController.text);
-                          //For the now
-                          Navigator.of(context).pushNamed(NavigationScreen.id);
-                        },
+                        onPressed: loginUser,
                       ),
                     ],
                   ),

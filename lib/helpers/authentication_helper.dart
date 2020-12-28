@@ -1,5 +1,6 @@
-import 'package:cargic_user/widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthHelper {
@@ -15,48 +16,61 @@ class AuthHelper {
   }
 
   //register user
-  String errorMessage;
-  regsterUser({
+  Future regsterUser({
     String email,
     String password,
+    String phone,
+    String fullName,
+    BuildContext context,
+    // String lastName,
   }) async {
+    String errorCode = '';
+
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       print(userCredential);
-    } on FirebaseAuthException catch (e) {
-      var firebaseError = e.code;
-      firebaseError = errorMessage;
-      sleekSnakBar(message: firebaseError);
-      print(firebaseError);
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      if (userCredential != null) {
+        DatabaseReference newUserRef = FirebaseDatabase.instance
+            .reference()
+            .child('users/${userCredential.user.uid}');
+        //set data to be saved
+        Map<String, dynamic> newUserMap = {
+          "fullname": fullName,
+          "email": email,
+          "phone": phone,
+        };
+        //save data
+        newUserRef.set(newUserMap);
+        print('Saved user $newUserMap');
+      } else {
+        print('user auth failed');
       }
-    } catch (e) {
-      print(e);
+    } on FirebaseAuthException catch (e) {
+      errorCode = e.code;
     }
+    return errorCode;
   }
 
   //login user
-  loginUser({String email, String password}) async {
+  Future loginUser(
+      {String email, String password, BuildContext context}) async {
+    // String error = '';
+    String errorCode = '';
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      print(userCredential);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      if (userCredential != null) {
+        print("works");
       }
+    } on FirebaseAuthException catch (e) {
+      errorCode = e.code;
     }
+    return errorCode;
   }
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    print('start');
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request

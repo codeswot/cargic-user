@@ -11,6 +11,8 @@ class SweetTextField extends StatelessWidget {
     this.onChanged,
     this.keyBoardType,
     this.maxLength,
+    this.textCapitalization,
+    this.toggleObsecure,
   }) : super(key: key);
   final IconData leadingIcon;
   final IconData trailinIcon;
@@ -18,13 +20,17 @@ class SweetTextField extends StatelessWidget {
   final bool obsecureText;
   final TextEditingController controller;
   final Function onChanged;
+  final Function toggleObsecure;
   final TextInputType keyBoardType;
   final int maxLength;
+  final TextCapitalization textCapitalization;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
-        textCapitalization: TextCapitalization.words,
+        textCapitalization: (textCapitalization != null)
+            ? textCapitalization
+            : TextCapitalization.words,
         maxLength: maxLength,
         controller: controller,
         onChanged: onChanged,
@@ -32,7 +38,9 @@ class SweetTextField extends StatelessWidget {
         obscureText: (obsecureText != null) ? obsecureText : false,
         decoration: InputDecoration(
           prefixIcon: (leadingIcon != null) ? Icon(leadingIcon) : null,
-          suffixIcon: (trailinIcon != null) ? Icon(trailinIcon) : null,
+          suffixIcon: (trailinIcon != null)
+              ? GestureDetector(onTap: toggleObsecure, child: Icon(trailinIcon))
+              : null,
           hintText: (hintText != null) ? hintText : 'Hint Text here!',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
