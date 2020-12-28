@@ -42,24 +42,30 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
         message: 'Logging you in ...',
       ),
     );
-    _authHelper
-        .loginUser(
-            email: _emailController.text,
-            password: _passwordController.text,
-            context: context)
-        .then((value) {
-      Navigator.of(context).pop();
+    if (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      _authHelper
+          .loginUser(
+              email: _emailController.text,
+              password: _passwordController.text,
+              context: context)
+          .then((value) {
+        Navigator.of(context).pop();
 
-      if (value == 'user-not-found') {
-        print('No user found for that email.');
-        showSnackbar(message: 'No user found for that email.');
-      } else if (value == 'wrong-password') {
-        print('Wrong password provided for that user.');
-        showSnackbar(message: 'Wrong password provided for that user.');
-      } else {
-        Navigator.of(context).popAndPushNamed(NavigationScreen.id);
-      }
-    });
+        if (value == 'user-not-found') {
+          print('No user found for that email.');
+          showSnackbar(message: 'No user found for that email.');
+        } else if (value == 'wrong-password') {
+          print('Wrong password provided for that user.');
+          showSnackbar(message: 'Wrong password provided for that user.');
+        } else {
+          Navigator.of(context).popAndPushNamed(NavigationScreen.id);
+        }
+      });
+    } else {
+      Navigator.of(context).pop();
+      showSnackbar(message: 'Field Can\'t be empty.');
+    }
   }
 
   toggleObsecure() {

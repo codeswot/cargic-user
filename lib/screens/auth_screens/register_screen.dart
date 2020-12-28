@@ -18,6 +18,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+
   TextEditingController _fullNameController = TextEditingController();
   // TextEditingController _lastNameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -44,28 +46,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
         message: 'Signin Up ...',
       ),
     );
-    _authHelper
-        .regsterUser(
-      context: context,
-      email: _emailController.text,
-      password: _passwordController.text,
-      fullName: _fullNameController.text,
-      // lastName: _lastNameController.text,
-      phone: _phoneController.text,
-    )
-        .then((value) {
-      Navigator.of(context).pop();
+    if (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        _fullNameController.text.isNotEmpty &&
+        _phoneController.text.isNotEmpty) {
+      if (_passwordController.text == _confirmPasswordController.text) {
+        _authHelper
+            .regsterUser(
+          context: context,
+          email: _emailController.text,
+          password: _passwordController.text,
+          fullName: _fullNameController.text,
+          // lastName: _lastNameController.text,
+          phone: _phoneController.text,
+        )
+            .then((value) {
+          Navigator.of(context).pop();
 
-      if (value == 'weak-password') {
-        print('The password provided is too weak.');
-        showSnackbar(message: 'The password provided is too weak.');
-      } else if (value == 'email-already-in-use') {
-        print('The account already exists for that email.');
-        showSnackbar(message: 'The account already exists for that email.');
+          if (value == 'weak-password') {
+            print('The password provided is too weak.');
+            showSnackbar(message: 'The password provided is too weak.');
+          } else if (value == 'email-already-in-use') {
+            print('The account already exists for that email.');
+            showSnackbar(message: 'The account already exists for that email.');
+          } else {
+            Navigator.of(context).popAndPushNamed(NavigationScreen.id);
+          }
+        });
       } else {
-        Navigator.of(context).popAndPushNamed(NavigationScreen.id);
+        Navigator.of(context).pop();
+        showSnackbar(message: 'Password Mismatch.');
       }
-    });
+    } else {
+      Navigator.of(context).pop();
+      showSnackbar(message: 'Field Can\'t be empty.');
+    }
   }
 
   toggleObsecure() {
@@ -159,6 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 20),
                     SweetTextField(
+                      controller: _confirmPasswordController,
                       obsecureText: isObsecure,
                       toggleObsecure: toggleObsecure,
                       leadingIcon: Icons.lock,

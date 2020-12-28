@@ -1,3 +1,5 @@
+import 'package:cargic_user/models/back_end_model/user_model.dart';
+import 'package:cargic_user/utils/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +7,30 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthHelper {
   //checks if a user is already logedin
-  checkForUser() {
+  Future<Map> getCurrentUser() async {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
-        print('User is signed in!');
+        currentFirebaseUser = FirebaseAuth.instance.currentUser;
+        String userId = currentFirebaseUser.uid;
+        DatabaseReference databaseReference =
+            FirebaseDatabase.instance.reference().child('users/$userId');
+        databaseReference.once().then((DataSnapshot snapshot) {
+          if (snapshot.value != null) {
+            currentUserInfo = UserModel.fromSnapshot(snapshot);
+            // print(
+            //     'my name is ${currentUserInfo.fullName} call me on ${currentUserInfo.phoneNumber} or email me here ${currentUserInfo.email}');
+          }
+        });
       }
     });
+    Map currentUser = {
+      "name": currentUserInfo.fullName,
+      "email": currentUserInfo.email,
+      "phone": currentUserInfo.phoneNumber,
+    };
+    return currentUser;
   }
 
   //register user

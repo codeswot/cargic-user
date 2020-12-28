@@ -22,8 +22,8 @@ class CargicUserProfileCard extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.all(15),
       padding: EdgeInsets.only(
-        left: 88.0,
-        right: 88.0,
+        left: 15.0,
+        right: 15.0,
         top: 23.5,
         bottom: 47.0,
       ),
@@ -45,6 +45,8 @@ class CargicUserProfileCard extends StatelessWidget {
           SizedBox(height: 22.5),
           Text(
             (userName != null) ? userName : '',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: CargicColors.brandBlue,
                 fontWeight: FontWeight.w600,
@@ -62,6 +64,8 @@ class CargicUserProfileCard extends StatelessWidget {
               SizedBox(width: 7.5),
               Text(
                 (userPhone != null) ? userPhone : '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: CargicColors.brandBlue,
                   fontSize: 14.0,
@@ -69,6 +73,7 @@ class CargicUserProfileCard extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: 7.5),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -80,6 +85,8 @@ class CargicUserProfileCard extends StatelessWidget {
               SizedBox(width: 7.5),
               Text(
                 (userEmail != null) ? userEmail : '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: CargicColors.brandBlue,
                   fontSize: 14.0,

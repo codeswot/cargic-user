@@ -1,3 +1,4 @@
+import 'package:cargic_user/helpers/authentication_helper.dart';
 import 'package:cargic_user/utils/cargic_icons_icons.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/cargic_profile_picture.dart';
@@ -14,6 +15,8 @@ class CargicSideNav extends StatefulWidget {
 }
 
 class _CargicSideNavState extends State<CargicSideNav> {
+  AuthHelper _authHelper = AuthHelper();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -27,26 +30,43 @@ class _CargicSideNavState extends State<CargicSideNav> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CargicProfilePic(
-                      image:
-                          'https://avatars3.githubusercontent.com/u/40618838?s=460&v=4',
-                      width: 65,
-                      height: 65,
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 120,
-                      child: Text(
-                        'Mubarak Ibrahim',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: CargicColors.deludedGrey,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.0,
-                          fontFamily: 'Nunito',
-                        ),
-                      ),
+                    FutureBuilder(
+                      future: _authHelper.getCurrentUser(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(vertical: 100),
+                            child: CircularProgressIndicator(
+                              backgroundColor: CargicColors.brandBlue,
+                            ),
+                          );
+                        }
+                        return Column(
+                          children: [
+                            CargicProfilePic(
+                              image:
+                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaj0ucKVpTNbey2YUj2f0V_MDQ1G6jBiwt2w&usqp=CAU',
+                              width: 65,
+                              height: 65,
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              width: 120,
+                              child: Text(
+                                '${snapshot.data['name']}',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: CargicColors.deludedGrey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  fontFamily: 'Nunito',
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     SizedBox(height: 26),
                     CargicListTile(
