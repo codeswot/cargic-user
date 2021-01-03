@@ -1,15 +1,39 @@
+import 'dart:async';
+
 import 'package:cargic_user/helpers/authentication_helper.dart';
+import 'package:cargic_user/helpers/location_helper.dart';
 import 'package:cargic_user/screens/auth_screens/login_with_email_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/brand_logo.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
-class LoginMethodScreen extends StatelessWidget {
+class LoginMethodScreen extends StatefulWidget {
   static const String id = 'LoginMethodScreen';
+
+  @override
+  _LoginMethodScreenState createState() => _LoginMethodScreenState();
+}
+
+class _LoginMethodScreenState extends State<LoginMethodScreen> {
+  LocationHelper _locationHelper = LocationHelper();
+  AuthHelper _authHelper = AuthHelper();
+
+  Geolocator _geolocator = Geolocator();
+  Position currentPosition;
+
+  getUserPosition() async {
+    Position position = await _geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    currentPosition = position;
+    // confirm location
+    await _locationHelper.findCoordAddress(currentPosition, context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    AuthHelper _authHelper = AuthHelper();
+    getUserPosition();
     return Scaffold(
       body: SafeArea(
         child: Column(

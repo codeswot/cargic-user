@@ -1,5 +1,4 @@
 import 'package:cargic_user/helpers/authentication_helper.dart';
-import 'package:cargic_user/models/back_end_model/user_model.dart';
 import 'package:cargic_user/screens/payment_screens/cards_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/cargic_profile_card.dart';

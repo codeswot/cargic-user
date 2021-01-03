@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cargic_user/screens/bottom_nav_screens/cart_screen.dart';
 import 'package:cargic_user/screens/bottom_nav_screens/home_screen.dart';
 import 'package:cargic_user/screens/bottom_nav_screens/ninja_screen.dart';
@@ -23,7 +24,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
   bool isUpComing = true;
   indexController() {
-    print(_selectedIndex);
+    // print(_selectedIndex);
   }
 
   static List<Widget> _screens = <Widget>[
@@ -32,6 +33,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
     NinjaScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

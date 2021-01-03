@@ -15,6 +15,7 @@ class SelectItemToCart extends StatefulWidget {
 }
 
 class _SelectItemToCartState extends State<SelectItemToCart> {
+  // ignore: deprecated_member_use
   List<CartItemModel> mockCartItem = List<CartItemModel>();
   List mockinCart = [];
   @override

@@ -41,9 +41,14 @@ class LocationCard extends StatelessWidget {
                   'Location for service',
                   style: TextStyle(color: CargicColors.plainWhite),
                 ),
-                Text(
-                  (location != null) ? location : '- -',
-                  style: TextStyle(color: CargicColors.plainWhite),
+                Container(
+                  width: 130,
+                  child: Text(
+                    (location != null) ? location : '- -',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: CargicColors.plainWhite),
+                  ),
                 ),
               ],
             ),

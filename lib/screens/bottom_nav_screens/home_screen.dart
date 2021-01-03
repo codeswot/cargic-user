@@ -1,3 +1,4 @@
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/screens/cargic_services/car_modification/car_modification_request_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_parts/car_parts_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/car_registeration_renewal_screen.dart';
@@ -11,6 +12,7 @@ import 'package:cargic_user/widgets/location_card.dart';
 import 'package:cargic_user/widgets/service_button_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'HomeScreen';
@@ -19,6 +21,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String address = '--';
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               //Location Button
               LocationCard(
-                // location: '',
+                location: Provider.of<AppData>(context, listen: true)
+                    .userAdress
+                    .placeName,
                 onTap: () {
                   Navigator.of(context).pushNamed(ChangeLocationScreen.id);
                 },
