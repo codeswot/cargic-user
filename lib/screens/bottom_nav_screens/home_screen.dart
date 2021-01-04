@@ -5,6 +5,7 @@ import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/ca
 import 'package:cargic_user/screens/cargic_services/car_service/car_services_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_screen.dart';
 import 'package:cargic_user/screens/change_location_screen.dart';
+import 'package:cargic_user/utils/car_logo.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/banner_ads.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
@@ -12,6 +13,7 @@ import 'package:cargic_user/widgets/location_card.dart';
 import 'package:cargic_user/widgets/service_button_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,8 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  var _box;
+  openBox() async {
+    _box = await Hive.openBox('user-vehicle-box');
+    print(_box.get('name'));
+  }
+
   @override
   Widget build(BuildContext context) {
+    openBox();
+
     return Scaffold(
       backgroundColor: CargicColors.faintWhite,
       body: Container(
@@ -42,9 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 //car info from DB
                 //if return from DB as null, set
                 //properties to null
-                // carName: 'Honda Accord',
-                // carLogo: CarLogos.honda,
-                // fuelType: 'Electric',
+                carName: _box.get('name'),
+                fuelType: _box.get('fuel'),
               ),
               //Banner ads
               CargicBannerAds(

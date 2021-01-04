@@ -4,7 +4,10 @@ import 'package:cargic_user/screens/auth_screens/onboarding_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:cargic_user/models/back_end_model/user_vehicle_model.dart';
 import 'dart:io' show Platform;
 
 void main() async {
@@ -27,6 +30,12 @@ void main() async {
           ),
   );
   print('fireBase App Name =>${app.name}');
+  var appDir = await getApplicationDocumentsDirectory();
+  var path = appDir.path;
+  Hive.init(path);
+  Hive.registerAdapter(UserVehicleAdapter());
+  var box = await Hive.openBox('vehicle-box');
+  print(box.name);
   runApp(MyApp());
 }
 

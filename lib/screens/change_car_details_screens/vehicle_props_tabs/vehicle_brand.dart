@@ -1,8 +1,10 @@
 import 'package:cargic_user/models/front_end_models/car_brand_model.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/car_logo.dart';
 import 'package:cargic_user/utils/car_names.dart';
 import 'package:cargic_user/widgets/car_brand_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 int chosenCarBrand;
 String carBrandName;
@@ -81,20 +83,25 @@ class _VehicleBrandState extends State<VehicleBrand> {
 
   @override
   Widget build(BuildContext context) {
+    var vehicleDB = Provider.of<AppData>(context, listen: false);
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
         return Container(
           child: GestureDetector(
-            onTap: () {
+            onTap: () async {
               setState(() {
                 sampleData.forEach((element) => element.isSelected = false);
                 sampleData[index].isSelected = true;
                 chosenCarBrand = index;
                 carBrandName = sampleData[index].carBrandName;
                 isCarBrandSelected = sampleData[index].isSelected;
-                print('chosen car brand is $carBrandName');
                 print(isCarBrandSelected);
               });
+              await vehicleDB.updateUserVehicle(
+                key: 'name',
+                value: sampleData[index].carBrandName,
+              );
+              print('chosen brand is ${vehicleDB.vName}');
             },
             child: CarBrandCard(
               item: sampleData[index],

@@ -1,8 +1,11 @@
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/car_make_fuel_type.dart';
 import 'package:cargic_user/utils/car_make_types.dart';
 import 'package:cargic_user/utils/car_make_year.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 class VehicleMakeType extends StatelessWidget {
   const VehicleMakeType({
@@ -11,9 +14,8 @@ class VehicleMakeType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String carModel = '';
-    String manufactureYear = '';
-    String fuelType = '';
+    var vehicleDB = Provider.of<AppData>(context, listen: false);
+
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(15),
@@ -46,8 +48,12 @@ class VehicleMakeType extends StatelessWidget {
                   hintText: 'Honda City',
                   border: InputBorder.none,
                 ),
-                onChanged: (val) {
-                  val = carModel;
+                onChanged: (val) async {
+                  await vehicleDB.updateUserVehicle(
+                    key: 'model',
+                    value: val,
+                  );
+                  print('chosen model is ${vehicleDB.vModel}');
                 },
                 items: getHondaModelList(),
               ),
@@ -67,8 +73,12 @@ class VehicleMakeType extends StatelessWidget {
                   hintText: '2018',
                   border: InputBorder.none,
                 ),
-                onChanged: (val) {
-                  val = manufactureYear;
+                onChanged: (val) async {
+                  await vehicleDB.updateUserVehicle(
+                    key: 'year',
+                    value: val,
+                  );
+                  print('chosen year is ${vehicleDB.vYear}');
                 },
                 items: getManufactureYear(),
               ),
@@ -87,8 +97,12 @@ class VehicleMakeType extends StatelessWidget {
                   hintText: 'Petrol',
                   border: InputBorder.none,
                 ),
-                onChanged: (val) {
-                  val = fuelType;
+                onChanged: (val) async {
+                  await vehicleDB.updateUserVehicle(
+                    key: 'fuel',
+                    value: val,
+                  );
+                  print('chosen model is ${vehicleDB.vFuel}');
                 },
                 items: getCarFuelType(),
               ),

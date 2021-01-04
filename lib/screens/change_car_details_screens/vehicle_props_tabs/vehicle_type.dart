@@ -1,6 +1,10 @@
 import 'package:cargic_user/models/front_end_models/car_type_model.dart';
+import 'package:cargic_user/models/back_end_model/user_vehicle_model.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/widgets/car_type_card.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 int chosenCarType;
 String carTypeName;
@@ -74,6 +78,8 @@ class VehicleTypeState extends State<VehicleType> {
 
   @override
   Widget build(BuildContext context) {
+    var vehicleDB = Provider.of<AppData>(context, listen: false);
+
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       padding: EdgeInsets.all(15),
@@ -81,17 +87,21 @@ class VehicleTypeState extends State<VehicleType> {
       itemBuilder: (BuildContext context, int index) {
         return Container(
           child: GestureDetector(
-            onTap: () {
+            onTap: () async {
               setState(() {
                 sampleData.forEach((element) => element.isSelected = false);
                 sampleData[index].isSelected = true;
                 chosenCarType = index;
                 isCarTypeSelected = sampleData[chosenCarType].isSelected;
                 carTypeName = sampleData[chosenCarType].carTypeName;
-                print('chosen car is $carTypeName');
 
                 print(isCarTypeSelected);
               });
+              await vehicleDB.updateUserVehicle(
+                key: 'type',
+                value: sampleData[chosenCarType].carTypeName,
+              );
+              print('chosen car is ${vehicleDB.vType}');
             },
             child: CarTypeCard(
               sampleData[index],

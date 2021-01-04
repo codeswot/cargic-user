@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../utils/car_logo.dart';
 
 class CarInfoDash extends StatelessWidget {
-  const CarInfoDash({
+  CarInfoDash({
     Key key,
     this.onTap,
     this.carName,
@@ -18,11 +18,16 @@ class CarInfoDash extends StatelessWidget {
   final Function onTap;
   final String carName;
   final String fuelType;
-  final String carLogo;
+  String carLogo;
   final bool isShaddow;
   final bool isBorder;
   @override
   Widget build(BuildContext context) {
+    if (carName == 'Honda') {
+      carLogo = CarLogos.honda;
+    } else if (carName == 'BMW') {
+      carLogo = CarLogos.bmw;
+    }
     return GestureDetector(
       onTap: () {
         (carName != null && fuelType != null)
