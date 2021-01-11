@@ -13,8 +13,12 @@ class CarServicesBookNow extends StatefulWidget {
 }
 
 class _CarServicesBookNowState extends State<CarServicesBookNow> {
+  DateTime _dateTime;
   navigatTo(context) {
     //pass DateTime Now
+    DateTime.now();
+    var dateNow = _dateTime.toLocal();
+    print(dateNow);
     Timer(Duration(seconds: 1), () {
       Navigator.of(context).pushNamed(PurchaseOrderScreen.id);
     });

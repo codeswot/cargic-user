@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:cargic_user/helpers/authentication_helper.dart';
 import 'package:cargic_user/helpers/location_helper.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/screens/auth_screens/login_with_email_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/brand_logo.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
 class LoginMethodScreen extends StatefulWidget {
   static const String id = 'LoginMethodScreen';
@@ -22,6 +24,9 @@ class _LoginMethodScreenState extends State<LoginMethodScreen> {
 
   Geolocator _geolocator = Geolocator();
   Position currentPosition;
+  getVheicleInfo() async {
+    await Provider.of<AppData>(context, listen: false).updateUserVehicle();
+  }
 
   getUserPosition() async {
     Position position = await _geolocator.getCurrentPosition(
@@ -34,6 +39,7 @@ class _LoginMethodScreenState extends State<LoginMethodScreen> {
   @override
   Widget build(BuildContext context) {
     getUserPosition();
+    getVheicleInfo();
     return Scaffold(
       body: SafeArea(
         child: Column(

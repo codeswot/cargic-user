@@ -1,9 +1,11 @@
 import 'package:cargic_user/models/front_end_models/selected_services_model.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/colors.dart';
 
 import 'package:cargic_user/widgets/check_out_container.dart';
 import 'package:cargic_user/widgets/check_out_credit_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarWashCheckOutTab extends StatefulWidget {
   const CarWashCheckOutTab({
@@ -47,12 +49,16 @@ class _CarWashCheckOutTabState extends State<CarWashCheckOutTab> {
 
   @override
   Widget build(BuildContext context) {
+    var vehicleDB = Provider.of<AppData>(context, listen: false);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CheckOutContainer(
             selectedServices: selectedServices,
+            carDashName: vehicleDB.vName,
+            carDashFuel: vehicleDB.vFuel,
           ),
           //
           Padding(

@@ -13,7 +13,6 @@ import 'package:cargic_user/widgets/location_card.dart';
 import 'package:cargic_user/widgets/service_button_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,15 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  var _box;
-  openBox() async {
-    _box = await Hive.openBox('user-vehicle-box');
-    print(_box.get('name'));
-  }
-
   @override
   Widget build(BuildContext context) {
-    openBox();
+    var vehicleDB = Provider.of<AppData>(context, listen: false);
 
     return Scaffold(
       backgroundColor: CargicColors.faintWhite,
@@ -52,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 //car info from DB
                 //if return from DB as null, set
                 //properties to null
-                carName: _box.get('name'),
-                fuelType: _box.get('fuel'),
+                carName: vehicleDB.vName,
+                fuelType: vehicleDB.vFuel,
               ),
               //Banner ads
               CargicBannerAds(

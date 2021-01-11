@@ -22,8 +22,8 @@ class CarLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       carLogo,
-      width: 35,
-      height: 35,
+      width: 25,
+      height: 25,
     );
   }
 }

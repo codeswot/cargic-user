@@ -109,13 +109,15 @@ class _ChooseVehiclePropsScreenState extends State<ChooseVehiclePropsScreen>
                 // (isClickable)?
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      if (tabController.length < 4) {
+                    if (tabController.index < 2) {
+                      setState(() {
                         tabController.index++;
-                      } else {
-                        return;
-                      }
-                    });
+                      });
+                    } else {
+                      Navigator.pop(context);
+
+                      return;
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),

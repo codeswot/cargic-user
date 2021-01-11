@@ -1,17 +1,23 @@
+import 'dart:async';
+
 import 'package:cargic_user/models/front_end_models/selected_services_model.dart';
-import 'package:cargic_user/utils/car_logo.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/utils/global_variables.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';
 import 'package:cargic_user/widgets/selected_service_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CheckOutContainer extends StatefulWidget {
   const CheckOutContainer({
     Key key,
     @required this.selectedServices,
+    this.carDashName,
+    this.carDashFuel,
   }) : super(key: key);
-
+  final String carDashName;
+  final String carDashFuel;
   final List<SelectedServiceModel> selectedServices;
 
   @override
@@ -19,8 +25,17 @@ class CheckOutContainer extends StatefulWidget {
 }
 
 class _CheckOutContainerState extends State<CheckOutContainer> {
+  var vehicleDB;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    vehicleDB = Provider.of<AppData>(context, listen: false);
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 23),
@@ -39,9 +54,12 @@ class _CheckOutContainerState extends State<CheckOutContainer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CarInfoDash(
-            carName: "Honda",
-            fuelType: "Petrol",
-            carLogo: CarLogos.honda,
+            carName: (widget.carDashName != null)
+                ? widget.carDashName
+                : vehicleDB.vName,
+            fuelType: (widget.carDashFuel != null)
+                ? widget.carDashFuel
+                : vehicleDB.vFuel,
             //car info from DB
             //if return from DB as null, set
             //properties to null

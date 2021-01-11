@@ -1,5 +1,6 @@
 import 'package:cargic_user/screens/change_car_details_screens/add_new_vehicle_screen.dart';
 import 'package:cargic_user/screens/change_car_details_screens/change_vehicle_screen.dart';
+import 'package:cargic_user/utils/car_names.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,24 @@ class CarInfoDash extends StatelessWidget {
   final bool isBorder;
   @override
   Widget build(BuildContext context) {
-    if (carName == 'Honda') {
+    if (carName == CarNames.honda) {
       carLogo = CarLogos.honda;
-    } else if (carName == 'BMW') {
+    } else if (carName == CarNames.bmw) {
       carLogo = CarLogos.bmw;
+    } else if (carName == CarNames.kia) {
+      carLogo = CarLogos.kia;
+    } else if (carName == CarNames.ford) {
+      carLogo = CarLogos.ford;
+    } else if (carName == CarNames.mercedes) {
+      carLogo = CarLogos.mercedes;
+    } else if (carName == CarNames.audi) {
+      carLogo = CarLogos.audi;
+    } else if (carName == CarNames.toyota) {
+      carLogo = CarLogos.toyota;
+    } else if (carName == CarNames.volvo) {
+      carLogo = CarLogos.volvo;
+    } else {
+      carLogo = 'images/brand_logo.svg';
     }
     return GestureDetector(
       onTap: () {
@@ -72,10 +87,11 @@ class CarInfoDash extends StatelessWidget {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //car logo container
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(13),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border:
@@ -90,17 +106,24 @@ class CarInfoDash extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    (carName != null) ? carName : 'Tap to add your ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: CargicColors.pitchBlack,
-                      fontSize: (carName != null) ? 18 : 14,
+                  Container(
+                    width: 100,
+                    child: Text(
+                      (carName != null) ? carName : 'Tap to add your ',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: CargicColors.pitchBlack,
+                        fontSize: (carName != null) ? 18 : 14,
+                      ),
                     ),
                   ),
                   SizedBox(height: 3),
                   Text(
                     (fuelType != null) ? fuelType : 'vehicle',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyle(
                       color: CargicColors.pitchBlack,
                       fontSize: 15,

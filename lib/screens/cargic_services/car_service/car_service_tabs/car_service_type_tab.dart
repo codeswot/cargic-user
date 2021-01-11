@@ -1,6 +1,8 @@
 import 'package:cargic_user/models/front_end_models/serviceTypeModel.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/widgets/car_service_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarServiceTypeTab extends StatefulWidget {
   const CarServiceTypeTab({
@@ -55,6 +57,11 @@ class _CarServiceTypeTabState extends State<CarServiceTypeTab> {
               setState(() {
                 sampleData.forEach((element) => element.isSelected = false);
                 sampleData[index].isSelected = true;
+                Provider.of<AppData>(context, listen: false).saveService(
+                  name: sampleData[index].carServiceName,
+                  type: 'Car Service',
+                  price: sampleData[index].carServicePrice,
+                );
               });
             },
             child: CarServiceCard(

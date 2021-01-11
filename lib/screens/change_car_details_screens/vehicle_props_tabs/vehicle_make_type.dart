@@ -4,7 +4,6 @@ import 'package:cargic_user/utils/car_make_types.dart';
 import 'package:cargic_user/utils/car_make_year.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class VehicleMakeType extends StatelessWidget {
