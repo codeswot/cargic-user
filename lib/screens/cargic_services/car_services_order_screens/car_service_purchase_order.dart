@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/screens/cargic_services/car_services_order_screens/track_order_screen.dart';
 import 'package:cargic_user/screens/navigation_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
 import 'package:cargic_user/widgets/cargic_brand_name.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +17,42 @@ class PurchaseOrderScreen extends StatefulWidget {
 }
 
 class _PurchaseOrderScreenState extends State<PurchaseOrderScreen> {
+  DatabaseReference rideRef;
+  // void cancelRideRequestOnTimeOut() {
+  //   Timer(
+  //     const Duration(minutes: 5),
+  //     () {
+  //       cancelRideRequest();
+  //     },
+  //   );
+  //   print('no Cargic available!, request time out ');
+  // }
+
+  // void cancelRideRequest() {
+  //   rideRef.remove();
+  //   print('deleted');
+  // }
+
+  sendRequestToDB() {
+    var cargicReq = Provider.of<AppData>(context).serviceReqMap;
+    Timer(Duration(seconds: 1), () {
+      rideRef = FirebaseDatabase.instance.reference().child('cargicReq').push();
+      rideRef.set(cargicReq);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    sendRequestToDB();
+
     String orderID = Provider.of<AppData>(context).serviceReqMap["orderID"];
-    String date = Provider.of<AppData>(context).serviceReqMap["formatted-date"];
+    String date = Provider.of<AppData>(context).serviceReqMap["formattedDate"];
 
     return Scaffold(
       body: SafeArea(
@@ -30,12 +65,14 @@ class _PurchaseOrderScreenState extends State<PurchaseOrderScreen> {
                 MaterialPageRoute(builder: (context) => NavigationScreen()),
                 (route) => false);
             Navigator.pushNamed(context, TrackOrderScreen.id);
+            Provider.of<AppData>(context, listen: false).servicePrice = null;
           },
           secondaryTap: () {
             //pop to home
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => NavigationScreen()),
                 (route) => false);
+            Provider.of<AppData>(context, listen: false).servicePrice = null;
           },
         ),
       ),

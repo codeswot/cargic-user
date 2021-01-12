@@ -1,8 +1,10 @@
 import 'package:cargic_user/models/front_end_models/date_picker_model.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/tasty_time_picker.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarServicesBookLater extends StatefulWidget {
   const CarServicesBookLater({
@@ -101,6 +103,9 @@ class _CarServicesBookLaterState extends State<CarServicesBookLater> {
     });
   }
 
+  var date;
+  String typeOfDay;
+  String time;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -120,8 +125,14 @@ class _CarServicesBookLaterState extends State<CarServicesBookLater> {
             initialSelectedDate: DateTime.now(),
             height: 90,
             selectedTextColor: CargicColors.brandBlue,
-            onDateChange: (date) {
-              print(date);
+            onDateChange: (val) {
+              date = val;
+              Provider.of<AppData>(context, listen: false).bookDate = val;
+              Provider.of<AppData>(context, listen: false).saveBookLaterInfo(
+                time: time,
+                date: date,
+                dayType: typeOfDay,
+              );
             },
           ),
         ),
@@ -144,7 +155,14 @@ class _CarServicesBookLaterState extends State<CarServicesBookLater> {
                   setState(() {
                     amPmData.forEach((element) => element.isSelected = false);
                     amPmData[index].isSelected = true;
+                    typeOfDay = amPmData[index].timeOfDay;
                   });
+                  Provider.of<AppData>(context, listen: false)
+                      .saveBookLaterInfo(
+                    time: time,
+                    date: date,
+                    dayType: typeOfDay,
+                  );
                 },
                 child: AmPmCard(
                   timeOfDay: amPmData[index].timeOfDay,
@@ -165,7 +183,14 @@ class _CarServicesBookLaterState extends State<CarServicesBookLater> {
                   setState(() {
                     sampleData.forEach((element) => element.isSelected = false);
                     sampleData[index].isSelected = true;
+                    time = sampleData[index].time;
                   });
+                  Provider.of<AppData>(context, listen: false)
+                      .saveBookLaterInfo(
+                    time: time,
+                    date: date,
+                    dayType: typeOfDay,
+                  );
                 },
                 child: TastyMonthPicker(
                   time: sampleData[index].time,

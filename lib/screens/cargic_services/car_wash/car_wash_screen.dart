@@ -4,6 +4,7 @@ import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_w
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_checkout_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_tabs/car_wash_type_tab.dart';
 import 'package:cargic_user/utils/colors.dart';
+import 'package:cargic_user/utils/random_code.dart';
 import 'package:cargic_user/widgets/subtotal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,86 @@ class _CarWashScreenState extends State<CarWashScreen>
   }
 
   navigateTo() {
+    //send to DB here
+    String monthName = '';
+    //get value from provider
+    var id = Provider.of<AppData>(context, listen: false).userID;
+    var serviceDate =
+        Provider.of<AppData>(context, listen: false).bookDate.toString();
+    var serviceTime = Provider.of<AppData>(context, listen: false).bookTime;
+    var dayType = Provider.of<AppData>(context, listen: false).bookTypeOfDay;
+
+    print('test to run $serviceDate $serviceTime $dayType ');
+    //split for use date
+    String fixedDate = serviceDate.split(' ')[0];
+    String day = fixedDate.split('-')[2];
+    String month = fixedDate.split('-')[1];
+    //split for use time
+    String hour = serviceTime.split(':')[0];
+    String min = serviceTime.split(':')[1];
+//    //split for use generate orderID
+    String userID = id.substring(0, 2);
+    String orderID = "#$userID$day${randomCode()}";
+    print(orderID);
+    //check for month name
+    var monthAsInt = int.parse(month);
+    assert(monthAsInt is int);
+    if (monthAsInt == 01) {
+      monthName = 'January';
+    } else if (monthAsInt == 02) {
+      monthName = 'Febuary';
+    } else if (monthAsInt == 03) {
+      monthName = 'March';
+    } else if (monthAsInt == 04) {
+      monthName = 'April';
+    } else if (monthAsInt == 05) {
+      monthName = 'May';
+    } else if (monthAsInt == 06) {
+      monthName = 'June';
+    } else if (monthAsInt == 07) {
+      monthName = 'July';
+    } else if (monthAsInt == 08) {
+      monthName = 'August';
+    } else if (monthAsInt == 09) {
+      monthName = 'September';
+    } else if (monthAsInt == 10) {
+      monthName = 'October';
+    } else if (monthAsInt == 11) {
+      monthName = 'November';
+    } else {
+      monthName = 'December';
+    }
+    // set formated date
+    String formattedDate = "$day $monthName at $hour:$min $dayType";
+//prepare data to send
+    Provider.of<AppData>(context, listen: false).sendServiceRequest(
+      orderID: orderID,
+      serviceType: Provider.of<AppData>(context, listen: false).serviceType,
+      serviceName: Provider.of<AppData>(context, listen: false).serviceName,
+      price: Provider.of<AppData>(context, listen: false).servicePrice,
+      serviceDiscount:
+          Provider.of<AppData>(context, listen: false).serviceDiscount,
+
+      date: '$day $month',
+      time: '$hour $min',
+      formattedDate: formattedDate,
+      //vehicle
+      vehicleType: Provider.of<AppData>(context, listen: false).vType,
+      vehicleName: Provider.of<AppData>(context, listen: false).vName,
+      vehicleModel: Provider.of<AppData>(context, listen: false).vModel,
+      vehicleManufactureYear:
+          Provider.of<AppData>(context, listen: false).vYear,
+      vehicleFuelType: Provider.of<AppData>(context, listen: false).vFuel,
+      //user
+      userAddress:
+          Provider.of<AppData>(context, listen: false).userAdress.placeName,
+      userName: Provider.of<AppData>(context, listen: false).userName,
+      userEmail: Provider.of<AppData>(context, listen: false).userEmail,
+      userPhone: Provider.of<AppData>(context, listen: false).userPhone,
+      //status
+      status: "Pending",
+      //ninja set it to accepted
+    );
     Navigator.of(context).pushNamed(PurchaseOrderScreen.id);
   }
 
@@ -59,6 +140,14 @@ class _CarWashScreenState extends State<CarWashScreen>
     String price = Provider.of<AppData>(context).servicePrice;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Provider.of<AppData>(context, listen: false).servicePrice = null;
+            //on back press
+            Navigator.of(context).pop();
+          },
+        ),
         title: Text('Car Wash'),
         bottom: PreferredSize(
           child: Column(
@@ -118,7 +207,7 @@ class _CarWashScreenState extends State<CarWashScreen>
             SubTotalCard(
               buttonTitle: buttonTitle,
               //set price from selected card
-              price: (price != null) ? price : '',
+              price: (price != null) ? price : null,
               //for now
               onTap: (isDone) ? navigateTo : indexController,
             ),

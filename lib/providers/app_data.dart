@@ -52,6 +52,21 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
+  //book for Later
+  String bookTime;
+  var bookDate;
+  String bookTypeOfDay;
+  saveBookLaterInfo({
+    var date,
+    String time,
+    String dayType,
+  }) {
+    bookTime = time;
+    bookDate = bookDate;
+    bookTypeOfDay = dayType;
+    notifyListeners();
+  }
+
   //for services
   String serviceName;
   String servicePrice;
@@ -95,6 +110,8 @@ class AppData extends ChangeNotifier {
     String vehicleModel,
     String vehicleManufactureYear,
     String vehicleFuelType,
+    double lat,
+    double lng,
   }) {
     Map<String, dynamic> serviceReq = {
       "orderID": orderID,
@@ -110,6 +127,8 @@ class AppData extends ChangeNotifier {
         "email": userEmail,
         "phone": userPhone,
         "address": userAddress,
+        "lat": lat,
+        "lng": lng,
       },
       "carDetails": {
         "vehicleType": vehicleType,

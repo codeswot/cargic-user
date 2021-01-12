@@ -31,11 +31,6 @@ class _CarServicesBookNowState extends State<CarServicesBookNow> {
     String gottenMonth = formatedDate.split('-')[1];
     String gottenDay = formatedDate.split('-')[2];
 
-    print(
-        'the day is $gottenDay of $gottenMonth and time is $gottenHour $gottenMin min');
-
-    print('time for $formatedTime');
-
     var day = gottenDay;
     var month = gottenMonth;
     var hour = gottenHour;
@@ -132,7 +127,6 @@ class _CarServicesBookNowState extends State<CarServicesBookNow> {
     String formattedDate = "$day $monthName at $hour12:$min $typeOfDay";
     Timer(Duration(seconds: 1), () {
       //send request to DB here
-      print(Provider.of<AppData>(context, listen: false).userID);
       Provider.of<AppData>(context, listen: false).sendServiceRequest(
         orderID: orderID,
         //service
@@ -155,6 +149,9 @@ class _CarServicesBookNowState extends State<CarServicesBookNow> {
         //user
         userAddress:
             Provider.of<AppData>(context, listen: false).userAdress.placeName,
+        lat: Provider.of<AppData>(context, listen: false).userAdress.lat,
+        lng: Provider.of<AppData>(context, listen: false).userAdress.lng,
+
         userName: Provider.of<AppData>(context, listen: false).userName,
         userEmail: Provider.of<AppData>(context, listen: false).userEmail,
         userPhone: Provider.of<AppData>(context, listen: false).userPhone,

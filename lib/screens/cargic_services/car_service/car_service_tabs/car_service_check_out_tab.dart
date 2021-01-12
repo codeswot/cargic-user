@@ -24,15 +24,9 @@ class _CarServiceCheckOutTabState extends State<CarServiceCheckOutTab> {
 
     selectedServices.add(
       SelectedServiceModel(
-        serviceName:
-            (Provider.of<AppData>(context, listen: false).serviceName != null)
-                ? Provider.of<AppData>(context).serviceName
-                : '',
+        serviceName: '',
         serviceDescription: "30 to 40 Minutes",
-        servicePrice:
-            (Provider.of<AppData>(context, listen: false).servicePrice != null)
-                ? Provider.of<AppData>(context).servicePrice
-                : '',
+        servicePrice: '',
       ),
     );
     selectedServices.add(
