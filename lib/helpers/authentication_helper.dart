@@ -1,36 +1,35 @@
 import 'package:cargic_user/models/back_end_model/user_model.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class AuthHelper {
   //checks if a user is already logedin
-  Future<Map> getCurrentUser() async {
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
+  getCurrentUser(context) async {
+    FirebaseAuth.instance.authStateChanges().listen((User user) async {
+      if (user != null) {
         currentFirebaseUser = FirebaseAuth.instance.currentUser;
-        String userId = currentFirebaseUser.uid;
+        String userID = currentFirebaseUser.uid;
         DatabaseReference databaseReference =
-            FirebaseDatabase.instance.reference().child('users/$userId');
-        databaseReference.once().then((DataSnapshot snapshot) {
+            FirebaseDatabase.instance.reference().child('users/$userID');
+        await databaseReference.once().then((DataSnapshot snapshot) {
           if (snapshot.value != null) {
-            currentUserInfo = UserModel.fromSnapshot(snapshot);
-            // print(
-            //     'my name is ${currentUserInfo.fullName} call me on ${currentUserInfo.phoneNumber} or email me here ${currentUserInfo.email}');
+            Provider.of<AppData>(context, listen: false).getUserInfo(
+              iD: userID,
+              name: snapshot.value['fullname'],
+              email: snapshot.value['email'],
+              phone: snapshot.value['phone'],
+            );
           }
         });
+      } else {
+        print('User is currently signed out!');
       }
     });
-    Map currentUser = {
-      "name": currentUserInfo.fullName,
-      "email": currentUserInfo.email,
-      "phone": currentUserInfo.phoneNumber,
-    };
-    return currentUser;
   }
 
   //register user
@@ -53,6 +52,7 @@ class AuthHelper {
             .reference()
             .child('users/${userCredential.user.uid}');
         //set data to be saved
+
         Map<String, dynamic> newUserMap = {
           "fullname": fullName,
           "email": email,
@@ -61,6 +61,20 @@ class AuthHelper {
         //save data
         newUserRef.set(newUserMap);
         print('Saved user $newUserMap');
+        currentFirebaseUser = FirebaseAuth.instance.currentUser;
+        String userID = currentFirebaseUser.uid;
+        DatabaseReference databaseReference =
+            FirebaseDatabase.instance.reference().child('users/$userID');
+        await databaseReference.once().then((DataSnapshot snapshot) {
+          if (snapshot.value != null) {
+            Provider.of<AppData>(context, listen: false).getUserInfo(
+              iD: userID,
+              name: snapshot.value['fullname'],
+              email: snapshot.value['email'],
+              phone: snapshot.value['phone'],
+            );
+          }
+        });
       } else {
         print('user auth failed');
       }
@@ -78,7 +92,23 @@ class AuthHelper {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      getCurrentUser(context);
       if (userCredential != null) {
+        currentFirebaseUser = FirebaseAuth.instance.currentUser;
+        String userID = currentFirebaseUser.uid;
+        DatabaseReference databaseReference =
+            FirebaseDatabase.instance.reference().child('users/$userID');
+        await databaseReference.once().then((DataSnapshot snapshot) {
+          if (snapshot.value != null) {
+            Provider.of<AppData>(context, listen: false).getUserInfo(
+              iD: userID,
+              name: snapshot.value["fullname"],
+              email: snapshot.value["email"],
+              phone: snapshot.value["phone"],
+            );
+          }
+        });
+
         print("works");
       }
     } on FirebaseAuthException catch (e) {

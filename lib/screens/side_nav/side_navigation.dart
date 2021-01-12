@@ -1,9 +1,11 @@
 import 'package:cargic_user/helpers/authentication_helper.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/cargic_icons_icons.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/cargic_profile_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class CargicSideNav extends StatefulWidget {
   const CargicSideNav({
@@ -30,43 +32,35 @@ class _CargicSideNavState extends State<CargicSideNav> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FutureBuilder(
-                      future: _authHelper.getCurrentUser(),
-                      builder: (context, snapshot) {
-                        if (snapshot.data == null) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(vertical: 100),
-                            child: CircularProgressIndicator(
-                              backgroundColor: CargicColors.brandBlue,
+                    Column(
+                      children: [
+                        CargicProfilePic(
+                          image:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaj0ucKVpTNbey2YUj2f0V_MDQ1G6jBiwt2w&usqp=CAU',
+                          width: 65,
+                          height: 65,
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          width: 120,
+                          child: Text(
+                            (Provider.of<AppData>(context, listen: false)
+                                        .userName !=
+                                    null)
+                                ? Provider.of<AppData>(context, listen: false)
+                                    .userName
+                                : '',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: CargicColors.deludedGrey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
                             ),
-                          );
-                        }
-                        return Column(
-                          children: [
-                            CargicProfilePic(
-                              image:
-                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaj0ucKVpTNbey2YUj2f0V_MDQ1G6jBiwt2w&usqp=CAU',
-                              width: 65,
-                              height: 65,
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              width: 120,
-                              child: Text(
-                                '${snapshot.data['name']}',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: CargicColors.deludedGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  fontFamily: 'Nunito',
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 26),
                     CargicListTile(

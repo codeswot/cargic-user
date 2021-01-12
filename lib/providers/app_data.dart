@@ -5,7 +5,23 @@ import 'package:hive/hive.dart';
 
 class AppData extends ChangeNotifier {
   //save user info
-  updateUserInfo() {}
+  String userName;
+  String userEmail;
+  String userPhone;
+  String userID;
+  getUserInfo({
+    String name,
+    String email,
+    String phone,
+    String iD,
+  }) {
+    userName = name;
+    userEmail = email;
+    userPhone = phone;
+    userID = iD;
+    notifyListeners();
+  }
+
   //for location
   // double locationLng;
   // double locationLat;
@@ -40,13 +56,22 @@ class AppData extends ChangeNotifier {
   String serviceName;
   String servicePrice;
   String serviceType;
-  saveService({String name, String type, String price}) {
+
+  saveService({
+    String name,
+    String type,
+    String price,
+  }) {
+    serviceName = name;
+    servicePrice = price;
+    serviceType = type;
     notifyListeners();
   }
 
   //sned to database
   Map<String, dynamic> serviceReqMap;
   sendServiceRequest({
+    String orderID,
     //service details
     String serviceType,
     String serviceName,
@@ -66,6 +91,7 @@ class AppData extends ChangeNotifier {
     String vehicleFuelType,
   }) {
     Map<String, dynamic> serviceReq = {
+      "orderID": orderID,
       "serviceType": serviceType,
       "serviceName": serviceName,
       "date": date,
@@ -86,6 +112,7 @@ class AppData extends ChangeNotifier {
       },
     };
     serviceReqMap = serviceReq;
+    print(serviceReqMap);
     notifyListeners();
   }
 }
