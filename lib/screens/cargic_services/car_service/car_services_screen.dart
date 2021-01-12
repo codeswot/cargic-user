@@ -1,3 +1,4 @@
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_booking_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_check_out_tab.dart';
 import 'package:cargic_user/screens/cargic_services/car_service/car_service_tabs/car_service_type_tab.dart';
@@ -5,6 +6,7 @@ import 'package:cargic_user/screens/cargic_services/car_services_order_screens/c
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/subtotal_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarServiceScreen extends StatefulWidget {
   static const String id = 'CarServiceScreen';
@@ -53,6 +55,7 @@ class _CarServiceScreenState extends State<CarServiceScreen>
 
   @override
   Widget build(BuildContext context) {
+    String price = Provider.of<AppData>(context).servicePrice;
     return Scaffold(
       appBar: AppBar(
         title: Text('Car Service'),
@@ -109,7 +112,7 @@ class _CarServiceScreenState extends State<CarServiceScreen>
             ),
             SubTotalCard(
               //set price from selected card
-              price: '300',
+              price: (price != null) ? price : '',
               //for now
               buttonTitle: buttonTitle,
               onTap: (isDone) ? navigateTo : indexController,

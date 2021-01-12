@@ -1,6 +1,8 @@
 import 'package:cargic_user/models/front_end_models/car_wash_service_model.dart';
+import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/widgets/car_wash_service_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarWashTypeTab extends StatefulWidget {
   const CarWashTypeTab({
@@ -87,6 +89,12 @@ class _CarWashTypeTabState extends State<CarWashTypeTab> {
                 setState(() {
                   sampleData.forEach((element) => element.isSelected = false);
                   sampleData[index].isSelected = true;
+                  Provider.of<AppData>(context, listen: false).saveService(
+                    type: "Car Wash",
+                    name: sampleData[index].carWashServiceName,
+                    discount: sampleData[index].carWashServiceDiscount,
+                    price: sampleData[index].carWashServicePrice,
+                  );
                 });
               },
               child: CarWashServiceCard(

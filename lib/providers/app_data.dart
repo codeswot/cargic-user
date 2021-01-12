@@ -56,15 +56,18 @@ class AppData extends ChangeNotifier {
   String serviceName;
   String servicePrice;
   String serviceType;
+  String serviceDiscount = '';
 
   saveService({
     String name,
     String type,
     String price,
+    String discount,
   }) {
     serviceName = name;
     servicePrice = price;
     serviceType = type;
+    serviceDiscount = discount;
     notifyListeners();
   }
 
@@ -72,12 +75,15 @@ class AppData extends ChangeNotifier {
   Map<String, dynamic> serviceReqMap;
   sendServiceRequest({
     String orderID,
+    String status,
     //service details
     String serviceType,
     String serviceName,
     String date,
     String time,
+    String formattedDate,
     String price,
+    String serviceDiscount,
     //user details
     String userName,
     String userEmail,
@@ -96,7 +102,9 @@ class AppData extends ChangeNotifier {
       "serviceName": serviceName,
       "date": date,
       "time": time,
+      "formattedDate": formattedDate,
       "price": price,
+      "serviceDiscount": serviceDiscount,
       "user": {
         "name": userName,
         "email": userEmail,
@@ -110,6 +118,7 @@ class AppData extends ChangeNotifier {
         "vehicleManufactureYear": vehicleManufactureYear,
         "vehicleFuelType": vehicleFuelType,
       },
+      "status": status,
     };
     serviceReqMap = serviceReq;
     print(serviceReqMap);
