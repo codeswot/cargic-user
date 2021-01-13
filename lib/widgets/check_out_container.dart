@@ -12,13 +12,19 @@ import 'package:provider/provider.dart';
 class CheckOutContainer extends StatefulWidget {
   const CheckOutContainer({
     Key key,
-    @required this.selectedServices,
     this.carDashName,
     this.carDashFuel,
+    this.serviceName,
+    this.serviceDesc,
+    this.serviceDate,
+    this.servicePrice,
   }) : super(key: key);
   final String carDashName;
   final String carDashFuel;
-  final List<SelectedServiceModel> selectedServices;
+  final String serviceName;
+  final String serviceDesc;
+  final String serviceDate;
+  final String servicePrice;
 
   @override
   _CheckOutContainerState createState() => _CheckOutContainerState();
@@ -71,27 +77,29 @@ class _CheckOutContainerState extends State<CheckOutContainer> {
           Container(
             padding: EdgeInsets.symmetric(vertical: 9),
             child: Text(
-              '06 November at 02:00 PM',
+              (widget.serviceDate != null) ? widget.serviceDate : '',
               style: TextStyle(fontSize: 12),
             ),
           ),
           Divider(height: 5, color: CargicColors.fairGrey),
           Container(
-            height: (widget.selectedServices.length < 3) ? 150 : 200,
+            height: 150,
             child: ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return SelectedServiceCard(
-                  serviceName: widget.selectedServices[index].serviceName,
+                  serviceName:
+                      (widget.servicePrice != null) ? widget.serviceName : '',
                   serviceDescription:
-                      widget.selectedServices[index].serviceDescription,
-                  servicePrice: widget.selectedServices[index].servicePrice,
+                      (widget.serviceDesc != null) ? widget.serviceDesc : '',
+                  servicePrice:
+                      (widget.servicePrice != null) ? widget.servicePrice : '',
                 );
               },
               separatorBuilder: (context, index) {
                 return Divider(height: 5, color: CargicColors.fairGrey);
               },
-              itemCount: widget.selectedServices.length,
+              itemCount: 1,
             ),
           ),
           Divider(height: 5, color: CargicColors.fairGrey),
@@ -109,7 +117,9 @@ class _CheckOutContainerState extends State<CheckOutContainer> {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    '$nigerianCurrency 550',
+                    (widget.servicePrice != null)
+                        ? '$nigerianCurrency ${widget.servicePrice}'
+                        : '',
                     style: TextStyle(
                       color: CargicColors.rageRed,
                     ),

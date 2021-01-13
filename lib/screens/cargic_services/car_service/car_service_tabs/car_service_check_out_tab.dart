@@ -43,16 +43,58 @@ class _CarServiceCheckOutTabState extends State<CarServiceCheckOutTab> {
 
   @override
   Widget build(BuildContext context) {
+    var date = Provider.of<AppData>(context, listen: false).bookDate.toString();
+    var monthName = '';
+    String fixedDate = date.split(' ')[0];
+    String month = fixedDate.split('-')[1];
+    String day = fixedDate.split('-')[2];
+    var time = Provider.of<AppData>(context, listen: false).bookTime;
+    var dayType = Provider.of<AppData>(context, listen: false).bookTypeOfDay;
+
     vehicleDB = Provider.of<AppData>(context, listen: false);
+    var monthAsInt = int.parse(month);
+    assert(monthAsInt is int);
+    if (monthAsInt == 01) {
+      monthName = 'January';
+    } else if (monthAsInt == 02) {
+      monthName = 'Febuary';
+    } else if (monthAsInt == 03) {
+      monthName = 'March';
+    } else if (monthAsInt == 04) {
+      monthName = 'April';
+    } else if (monthAsInt == 05) {
+      monthName = 'May';
+    } else if (monthAsInt == 06) {
+      monthName = 'June';
+    } else if (monthAsInt == 07) {
+      monthName = 'July';
+    } else if (monthAsInt == 08) {
+      monthName = 'August';
+    } else if (monthAsInt == 09) {
+      monthName = 'September';
+    } else if (monthAsInt == 10) {
+      monthName = 'October';
+    } else if (monthAsInt == 11) {
+      monthName = 'November';
+    } else {
+      monthName = 'December';
+    }
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CheckOutContainer(
-            selectedServices: selectedServices,
             carDashName: Provider.of<AppData>(context, listen: false).vName,
             carDashFuel: Provider.of<AppData>(context, listen: false).vFuel,
+            serviceName:
+                Provider.of<AppData>(context, listen: false).serviceName,
+            servicePrice:
+                Provider.of<AppData>(context, listen: false).servicePrice,
+            serviceDesc:
+                Provider.of<AppData>(context, listen: false).serviceDesc,
+            serviceDate:
+                (date != null) ? '$day $monthName at $time $dayType' : '',
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),

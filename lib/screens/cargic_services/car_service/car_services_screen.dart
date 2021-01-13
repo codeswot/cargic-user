@@ -95,6 +95,7 @@ class _CarServiceScreenState extends State<CarServiceScreen>
       serviceType: Provider.of<AppData>(context, listen: false).serviceType,
       serviceName: Provider.of<AppData>(context, listen: false).serviceName,
       price: Provider.of<AppData>(context, listen: false).servicePrice,
+      serviceDesc: Provider.of<AppData>(context, listen: false).serviceDesc,
       serviceDiscount:
           Provider.of<AppData>(context, listen: false).serviceDiscount,
 

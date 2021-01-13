@@ -93,6 +93,7 @@ class _CarWashTypeTabState extends State<CarWashTypeTab> {
                     type: "Car Wash",
                     name: sampleData[index].carWashServiceName,
                     discount: sampleData[index].carWashServiceDiscount,
+                    desc: '',
                     price: sampleData[index].carWashServicePrice,
                   );
                 });

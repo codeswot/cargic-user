@@ -60,6 +60,7 @@ class _CarServiceTypeTabState extends State<CarServiceTypeTab> {
                 Provider.of<AppData>(context, listen: false).saveService(
                   name: sampleData[index].carServiceName,
                   type: 'Car Service',
+                  desc: sampleData[index].carServiceDescription,
                   price: sampleData[index].carServicePrice,
                 );
               });

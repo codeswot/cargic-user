@@ -72,17 +72,20 @@ class AppData extends ChangeNotifier {
   String servicePrice;
   String serviceType;
   String serviceDiscount = '';
+  String serviceDesc = '';
 
   saveService({
     String name,
     String type,
     String price,
     String discount,
+    String desc,
   }) {
     serviceName = name;
     servicePrice = price;
     serviceType = type;
     serviceDiscount = discount;
+    serviceDesc = desc;
     notifyListeners();
   }
 
@@ -94,6 +97,7 @@ class AppData extends ChangeNotifier {
     //service details
     String serviceType,
     String serviceName,
+    String serviceDesc,
     String date,
     String time,
     String formattedDate,
@@ -117,6 +121,7 @@ class AppData extends ChangeNotifier {
       "orderID": orderID,
       "serviceType": serviceType,
       "serviceName": serviceName,
+      "serviceDesc": serviceDesc,
       "date": date,
       "time": time,
       "formattedDate": formattedDate,
