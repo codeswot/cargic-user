@@ -5,15 +5,22 @@ import 'package:cargic_user/screens/navigation_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
 import 'package:cargic_user/widgets/track_order_timeline.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class TrackOrderScreen extends StatefulWidget {
+  TrackOrderScreen({this.reqID});
+  final String reqID;
   static const String id = 'TrackOrderScreen';
   @override
   _TrackOrderScreenState createState() => _TrackOrderScreenState();
 }
 
 class _TrackOrderScreenState extends State<TrackOrderScreen> {
+  FirebaseDatabase db = FirebaseDatabase.instance;
+
+  DatabaseReference dbRef;
+
   String mockOrderID = '01032';
   String orderStatus = 'Pending';
   bool isProssesed = false;
@@ -22,7 +29,29 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
   Color processLineColor;
   Color assignedColor;
   Color assignedLineColor;
-  mockServiceTracking() {
+  void cancelOrder() {
+    //track by orderID
+    db.reference().child('cargicReq').child('${widget.reqID}').remove();
+    print('order canceld');
+  }
+
+  void cancelRideRequestOnTimeOut() {
+    Timer(
+      const Duration(minutes: 5),
+      () {
+        if (!isAssigned) {
+          cancelOrder();
+        }
+      },
+    );
+    print('no Cargic available!, request time out ');
+  }
+
+  serviceTracking() {
+    String requestID = widget.reqID;
+    var reqStatus =
+        db.reference().child('cargicReq').child('$requestID').child('status');
+    print(reqStatus.once());
     Timer(Duration(seconds: 2), () {
       setState(() {
         isProssesed = true;
@@ -52,7 +81,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   @override
   void initState() {
-    mockServiceTracking();
+    serviceTracking();
     super.initState();
   }
 
@@ -60,7 +89,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order #$mockOrderID'),
+        title: Text('Order ${widget.reqID}'),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 15),
@@ -95,13 +124,12 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                 titleColor: CargicColors.smoothGray,
                 buttonColor: CargicColors.plainWhite,
                 onPressed: () {
-                  //delete order from DB, and pop
-                  //sure u want to cancel
+                  //delete from DB
+                  cancelOrder();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => NavigationScreen()),
                       (route) => false);
-                  print('Order Caneled');
                 },
               ),
             ),

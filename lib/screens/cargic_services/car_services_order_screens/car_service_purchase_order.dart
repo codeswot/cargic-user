@@ -17,27 +17,16 @@ class PurchaseOrderScreen extends StatefulWidget {
 }
 
 class _PurchaseOrderScreenState extends State<PurchaseOrderScreen> {
-  DatabaseReference rideRef;
-  // void cancelRideRequestOnTimeOut() {
-  //   Timer(
-  //     const Duration(minutes: 5),
-  //     () {
-  //       cancelRideRequest();
-  //     },
-  //   );
-  //   print('no Cargic available!, request time out ');
-  // }
-
-  // void cancelRideRequest() {
-  //   rideRef.remove();
-  //   print('deleted');
-  // }
+  String reqID = '';
+  DatabaseReference dbRef;
 
   sendRequestToDB() {
     var cargicReq = Provider.of<AppData>(context).serviceReqMap;
     Timer(Duration(seconds: 1), () {
-      rideRef = FirebaseDatabase.instance.reference().child('cargicReq').push();
-      rideRef.set(cargicReq);
+      dbRef = FirebaseDatabase.instance.reference().child('cargicReq').push();
+      reqID = dbRef.key;
+      print(dbRef.key);
+      dbRef.set(cargicReq);
     });
   }
 
@@ -64,7 +53,12 @@ class _PurchaseOrderScreenState extends State<PurchaseOrderScreen> {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => NavigationScreen()),
                 (route) => false);
-            Navigator.pushNamed(context, TrackOrderScreen.id);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TrackOrderScreen(reqID: reqID),
+              ),
+            );
             Provider.of<AppData>(context, listen: false).servicePrice = null;
           },
           secondaryTap: () {
