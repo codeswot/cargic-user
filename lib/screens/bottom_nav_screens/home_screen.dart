@@ -5,7 +5,6 @@ import 'package:cargic_user/screens/cargic_services/car_registeration_renewal/ca
 import 'package:cargic_user/screens/cargic_services/car_service/car_services_screen.dart';
 import 'package:cargic_user/screens/cargic_services/car_wash/car_wash_screen.dart';
 import 'package:cargic_user/screens/change_location_screen.dart';
-import 'package:cargic_user/utils/car_logo.dart';
 import 'package:cargic_user/utils/colors.dart';
 import 'package:cargic_user/widgets/banner_ads.dart';
 import 'package:cargic_user/widgets/car_info_dash.dart';

@@ -107,7 +107,7 @@ class RequestedServiceProviderCard extends StatelessWidget {
                         isReadOnly: true,
                         rating: (serviceProviderRating != null)
                             ? serviceProviderRating
-                            : 0,
+                            : 3.0,
                       ),
                     ],
                   ),

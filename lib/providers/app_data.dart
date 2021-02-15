@@ -143,6 +143,7 @@ class AppData extends ChangeNotifier {
         "vehicleFuelType": vehicleFuelType,
       },
       "status": status,
+      "ninjaInfo": '',
     };
     serviceReqMap = serviceReq;
     print(serviceReqMap);

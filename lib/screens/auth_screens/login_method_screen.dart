@@ -1,13 +1,17 @@
 import 'dart:async';
 
 import 'package:cargic_user/helpers/authentication_helper.dart';
+import 'package:cargic_user/helpers/geofire_helper.dart';
 import 'package:cargic_user/helpers/location_helper.dart';
+import 'package:cargic_user/models/back_end_model/nearby_ninjas.dart';
 import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/screens/auth_screens/login_with_email_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
+import 'package:cargic_user/utils/global_variables.dart';
 import 'package:cargic_user/widgets/brand_logo.dart';
 import 'package:cargic_user/widgets/candy_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -21,11 +25,67 @@ class LoginMethodScreen extends StatefulWidget {
 class _LoginMethodScreenState extends State<LoginMethodScreen> {
   LocationHelper _locationHelper = LocationHelper();
   AuthHelper _authHelper = AuthHelper();
-
+  bool nearbyDriverKeyLoaded = false;
   Geolocator _geolocator = Geolocator();
-  Position currentPosition;
+
   getVheicleInfo() async {
     await Provider.of<AppData>(context, listen: false).updateUserVehicle();
+  }
+
+  void startGeoFire() {
+    Geofire.initialize('ninjasAvailable');
+    Geofire.queryAtLocation(
+            currentPosition.latitude, currentPosition.longitude, 19)
+        .listen((map) {
+      print(map);
+      if (map != null) {
+        var callBack = map['callBack'];
+        print('position $currentPosition');
+        //latitude will be retrieved from map['latitude']
+        //longitude will be retrieved from map['longitude']
+
+        switch (callBack) {
+          case Geofire.onKeyEntered:
+            NearbyNinjas nearbyNinjas = NearbyNinjas();
+            nearbyNinjas.key = map['key'];
+            nearbyNinjas.latitude = map['latitude'];
+            nearbyNinjas.longitude = map['longitude'];
+            FireHelper.nearbyNinjaList.add(nearbyNinjas);
+            print('nearby Ninja==> $nearbyNinjas');
+            if (nearbyDriverKeyLoaded) {
+              // updateDriversMap();
+            }
+            // keysRetrieved.add(map["key"]);
+            break;
+
+          case Geofire.onKeyExited:
+            // keysRetrieved.remove(map["key"]);
+            FireHelper().removeFromList(key: map['key']);
+            // updateDriversMap();
+
+            break;
+
+          case Geofire.onKeyMoved:
+            // Update your key's location
+            NearbyNinjas nearbyNinjas = NearbyNinjas();
+            nearbyNinjas.key = map['key'];
+            nearbyNinjas.latitude = map['latitude'];
+            nearbyNinjas.longitude = map['longitude'];
+            // FireHelper.nearbyDriverList.add(nearbyDriver);
+            FireHelper().updateNearbyNinjas(nearbyNinjas);
+            // updateDriversMap();
+
+            break;
+
+          case Geofire.onGeoQueryReady:
+            // All Intial Data is loaded
+            nearbyDriverKeyLoaded = true;
+            // updateDriversMap();
+
+            break;
+        }
+      }
+    });
   }
 
   getUserPosition() async {
@@ -34,6 +94,7 @@ class _LoginMethodScreenState extends State<LoginMethodScreen> {
     currentPosition = position;
     // confirm location
     await _locationHelper.findCoordAddress(currentPosition, context);
+    startGeoFire();
   }
 
   @override

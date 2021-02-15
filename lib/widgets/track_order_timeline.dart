@@ -39,11 +39,11 @@ class TrackOrderTimeLine extends StatefulWidget {
 
 class _TrackOrderTimeLineState extends State<TrackOrderTimeLine> {
   checkStausColor() {
-    if (widget.orderStatus == 'Accepted') {
+    if (widget.orderStatus == 'accepted') {
       setState(() {
         widget.orderStatusColor = CargicColors.willGreen;
       });
-    } else if (widget.orderStatus == 'Pending') {
+    } else if (widget.orderStatus == 'pending') {
       widget.orderStatusColor = CargicColors.fearYellow;
     } else {
       widget.orderStatusColor = CargicColors.rageRed;

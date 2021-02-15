@@ -1,4 +1,3 @@
-import 'package:cargic_user/models/back_end_model/user_model.dart';
 import 'package:cargic_user/providers/app_data.dart';
 import 'package:cargic_user/utils/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';

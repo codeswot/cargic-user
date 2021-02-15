@@ -9,8 +9,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class TrackOrderScreen extends StatefulWidget {
-  TrackOrderScreen({this.reqID});
+  TrackOrderScreen({this.reqID, this.orderID});
   final String reqID;
+  final String orderID;
   static const String id = 'TrackOrderScreen';
   @override
   _TrackOrderScreenState createState() => _TrackOrderScreenState();
@@ -18,11 +19,7 @@ class TrackOrderScreen extends StatefulWidget {
 
 class _TrackOrderScreenState extends State<TrackOrderScreen> {
   FirebaseDatabase db = FirebaseDatabase.instance;
-
-  DatabaseReference dbRef;
-
-  String mockOrderID = '01032';
-  String orderStatus = 'Pending';
+  String orderStatus = 'pending';
   bool isProssesed = false;
   bool isAssigned = false;
   Color processColor;
@@ -35,9 +32,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
     print('order canceld');
   }
 
+  DatabaseReference dataBaseRef = FirebaseDatabase().reference();
   void cancelRideRequestOnTimeOut() {
     Timer(
-      const Duration(minutes: 5),
+      const Duration(hours: 12),
       () {
         if (!isAssigned) {
           cancelOrder();
@@ -49,73 +47,97 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   serviceTracking() {
     String requestID = widget.reqID;
-    var reqStatus =
-        db.reference().child('cargicReq').child('$requestID').child('status');
-    print(reqStatus.once());
-    Timer(Duration(seconds: 2), () {
-      setState(() {
-        isProssesed = true;
-      });
-      if (isProssesed) {
-        print('Processed');
-        setState(() {
-          processLineColor = CargicColors.willGreen;
-          processColor = CargicColors.willGreen;
-          Timer(Duration(seconds: 5), () {
-            setState(() {
-              isAssigned = true;
-            });
-            if (isAssigned) {
-              print('Assigned');
+
+    db.reference().child('cargicReq/$requestID/status').once().then(
+      (DataSnapshot snapshot) {
+        if (snapshot.value != null) {
+          if (snapshot.value == 'accepted') {
+            Timer(Duration(seconds: 1), () {
               setState(() {
-                assignedColor = CargicColors.willGreen;
-                assignedLineColor = CargicColors.willGreen;
-                orderStatus = 'Accepted';
+                isProssesed = true;
               });
-            }
-          });
-        });
-      }
-    });
+              if (isProssesed) {
+                setState(() {
+                  processLineColor = CargicColors.willGreen;
+                  processColor = CargicColors.willGreen;
+                  Timer(Duration(seconds: 2), () {
+                    setState(() {
+                      isAssigned = true;
+                    });
+                    if (isAssigned) {
+                      setState(() {
+                        assignedColor = CargicColors.willGreen;
+                        assignedLineColor = CargicColors.willGreen;
+                        orderStatus = snapshot.value.toString();
+                      });
+                    }
+                  });
+                });
+              }
+            });
+          }
+        }
+      },
+    );
+    // print(reqStatus.once());
   }
 
   @override
   void initState() {
-    serviceTracking();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    serviceTracking();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order ${widget.reqID}'),
+        title: Text('Order ${widget.orderID}'),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TrackOrderTimeLine(
-              serviceName: 'Engine Oil change',
-              dateTime: 'Mon, 02 November 09:50pm',
-              orderDeliveryAddress: '14, kandor ave. Krypton',
-              priceToPay: 2200,
-              orderStatus: orderStatus,
-              orderProcessLinColor: processLineColor,
-              orderProcessColor: processColor,
-              orderAssignedLineColor: assignedLineColor,
-              orderAssingnedColor: assignedColor,
-              isAssigned: isAssigned,
-              onTap: (isAssigned)
-                  ? () {
-                      print('Assingend, taking to map');
-                      Navigator.of(context).pushNamed(TrackOrderMap.id);
-                    }
-                  : () {
-                      print('No one Assingend');
-                    },
-            ),
+            StreamBuilder(
+                stream:
+                    db.reference().child('cargicReq/${widget.reqID}').onValue,
+                builder: (context, snap) {
+                  if (snap.data != null) {
+                    return TrackOrderTimeLine(
+                      serviceName: snap.data.snapshot.value['serviceName'],
+                      dateTime: snap.data.snapshot.value['formattedDate'],
+                      orderDeliveryAddress: snap.data.snapshot.value['user']
+                          ['address'],
+                      priceToPay:
+                          double.parse(snap.data.snapshot.value['price']),
+                      orderStatus: snap.data.snapshot.value['status'],
+                      orderProcessLinColor: processLineColor,
+                      orderProcessColor: processColor,
+                      orderAssignedLineColor: assignedLineColor,
+                      orderAssingnedColor: assignedColor,
+                      isAssigned: isAssigned,
+                      onTap: (orderStatus == 'accepted')
+                          ? () {
+                              print('Assingend, taking to map');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TrackOrderMap(
+                                      orderID: widget.orderID,
+                                      reqID: widget.reqID),
+                                ),
+                              );
+                            }
+                          : () {
+                              print('No one Assingend');
+                            },
+                    );
+                  }
+                  return CircularProgressIndicator();
+                }),
+
             //if cant cancel accepted order (isAssigned bool)
             Container(
               padding: EdgeInsets.symmetric(horizontal: 57, vertical: 45),

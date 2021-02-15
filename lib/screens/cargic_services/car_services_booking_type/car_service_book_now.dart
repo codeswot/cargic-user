@@ -156,7 +156,7 @@ class _CarServicesBookNowState extends State<CarServicesBookNow> {
         userEmail: Provider.of<AppData>(context, listen: false).userEmail,
         userPhone: Provider.of<AppData>(context, listen: false).userPhone,
         //status
-        status: "Pending",
+        status: "pending",
         //ninja set it to accepted
       );
       Navigator.of(context).pushNamed(PurchaseOrderScreen.id);
