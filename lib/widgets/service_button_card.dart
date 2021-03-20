@@ -82,8 +82,8 @@ class ServicesButtonCard extends StatelessWidget {
                     (serviceIcon != null)
                         ? serviceIcon
                         : 'images/brand_logo.svg',
-                    width: 105.0,
-                    height: 78.0,
+                    width: 99.0,
+                    height: 66.0,
                   ),
                 ),
               ],

@@ -49,7 +49,7 @@ class _CarServiceTypeTabState extends State<CarServiceTypeTab> {
           crossAxisCount: 2,
           crossAxisSpacing: 15.0,
           mainAxisSpacing: 15.0,
-          childAspectRatio: 5 / 7,
+          childAspectRatio: 5 / 8,
         ),
         itemBuilder: (context, index) {
           return GestureDetector(

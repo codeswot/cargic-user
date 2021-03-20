@@ -16,7 +16,7 @@ dependencies:
 
 # packages // front end
   cupertino_icons: ^1.0.0
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.19.3
   date_picker_timeline: ^1.2.1
   timeline_tile: ^1.0.0
 # packages //back end
@@ -39,6 +39,7 @@ dependencies:
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   path_provider: ^1.6.24
+  flutterwave: ^0.0.2
   # ext_storage: ^1.0.3
 
 
