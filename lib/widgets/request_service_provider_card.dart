@@ -32,7 +32,7 @@ class RequestedServiceProviderCard extends StatelessWidget {
       width: double.infinity,
       height: 170, //TODO media Q
 
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(10),
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
 
       decoration: BoxDecoration(

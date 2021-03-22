@@ -100,59 +100,65 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            StreamBuilder(
-                stream:
-                    db.reference().child('cargicReq/${widget.reqID}').onValue,
-                builder: (context, snap) {
-                  if (snap.data != null) {
-                    return TrackOrderTimeLine(
-                      serviceName: snap.data.snapshot.value['serviceName'],
-                      dateTime: snap.data.snapshot.value['formattedDate'],
-                      orderDeliveryAddress: snap.data.snapshot.value['user']
-                          ['address'],
-                      priceToPay:
-                          double.parse(snap.data.snapshot.value['price']),
-                      orderStatus: snap.data.snapshot.value['status'],
-                      orderProcessLinColor: processLineColor,
-                      orderProcessColor: processColor,
-                      orderAssignedLineColor: assignedLineColor,
-                      orderAssingnedColor: assignedColor,
-                      isAssigned: isAssigned,
-                      onTap: (orderStatus == 'accepted')
-                          ? () {
-                              print('Assingend, taking to map');
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TrackOrderMap(
-                                      orderID: widget.orderID,
-                                      reqID: widget.reqID),
-                                ),
-                              );
-                            }
-                          : () {
-                              print('No one Assingend');
-                            },
-                    );
-                  }
-                  return CircularProgressIndicator();
-                }),
+            Flexible(
+              flex: 4,
+              child: StreamBuilder(
+                  stream:
+                      db.reference().child('cargicReq/${widget.reqID}').onValue,
+                  builder: (context, snap) {
+                    if (snap.data != null) {
+                      return TrackOrderTimeLine(
+                        serviceName: snap.data.snapshot.value['serviceName'],
+                        dateTime: snap.data.snapshot.value['formattedDate'],
+                        orderDeliveryAddress: snap.data.snapshot.value['user']
+                            ['address'],
+                        priceToPay:
+                            double.parse(snap.data.snapshot.value['price']),
+                        orderStatus: snap.data.snapshot.value['status'],
+                        orderProcessLinColor: processLineColor,
+                        orderProcessColor: processColor,
+                        orderAssignedLineColor: assignedLineColor,
+                        orderAssingnedColor: assignedColor,
+                        isAssigned: isAssigned,
+                        onTap: (orderStatus == 'accepted')
+                            ? () {
+                                print('Assingend, taking to map');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TrackOrderMap(
+                                        orderID: widget.orderID,
+                                        reqID: widget.reqID),
+                                  ),
+                                );
+                              }
+                            : () {
+                                print('No one Assingend');
+                              },
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  }),
+            ),
 
             //if cant cancel accepted order (isAssigned bool)
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 57, vertical: 45),
-              child: CandyButton(
-                title: 'Cancel Order',
-                titleColor: CargicColors.smoothGray,
-                buttonColor: CargicColors.plainWhite,
-                onPressed: () {
-                  //delete from DB
-                  cancelOrder();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => NavigationScreen()),
-                      (route) => false);
-                },
+            Flexible(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 57, vertical: 35),
+                child: CandyButton(
+                  title: 'Cancel Order',
+                  titleColor: CargicColors.smoothGray,
+                  buttonColor: CargicColors.plainWhite,
+                  onPressed: () {
+                    //delete from DB
+                    cancelOrder();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => NavigationScreen()),
+                        (route) => false);
+                  },
+                ),
               ),
             ),
           ],

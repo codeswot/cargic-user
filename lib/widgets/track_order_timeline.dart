@@ -120,91 +120,90 @@ class _TrackOrderTimeLineState extends State<TrackOrderTimeLine> {
                   ),
                 ),
                 Container(
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        TimelineTile(
-                          alignment: TimelineAlign.manual,
-                          lineXY: 0.1,
-                          isFirst: true,
-                          indicatorStyle: const IndicatorStyle(
-                            width: 15,
-                            color: CargicColors.willGreen,
-                            padding: EdgeInsets.all(4),
-                          ),
-                          endChild: const TrackOrderTimeLineInfo(
-                            title: 'Order Placed',
-                            message: 'We have received your order.',
-                          ),
-                          beforeLineStyle: const LineStyle(
-                            color: CargicColors.willGreen,
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 15),
+                      // TimelineTile(
+                      //   alignment: TimelineAlign.manual,
+                      //   lineXY: 0.1,
+                      //   isFirst: true,
+                      //   indicatorStyle: const IndicatorStyle(
+                      //     width: 15,
+                      //     color: CargicColors.willGreen,
+                      //     padding: EdgeInsets.all(4),
+                      //   ),
+                      //   endChild: const TrackOrderTimeLineInfo(
+                      //     title: 'Order Placed',
+                      //     message: 'We have received your order.',
+                      //   ),
+                      //   beforeLineStyle: const LineStyle(
+                      //     color: CargicColors.willGreen,
+                      //   ),
+                      // ),
+                      TimelineTile(
+                        alignment: TimelineAlign.manual,
+                        lineXY: 0.1,
+                        indicatorStyle: const IndicatorStyle(
+                          width: 15,
+                          color: CargicColors.willGreen,
+                          padding: EdgeInsets.all(4),
                         ),
-                        TimelineTile(
-                          alignment: TimelineAlign.manual,
-                          lineXY: 0.1,
-                          indicatorStyle: const IndicatorStyle(
-                            width: 15,
-                            color: CargicColors.willGreen,
-                            padding: EdgeInsets.all(4),
-                          ),
-                          endChild: const TrackOrderTimeLineInfo(
-                            title: 'Order Confirmed',
-                            message: 'Your order has been confirmed.',
-                          ),
-                          beforeLineStyle: const LineStyle(
-                            color: CargicColors.willGreen,
-                          ),
+                        endChild: const TrackOrderTimeLineInfo(
+                          title: 'Order Confirmed',
+                          message: 'Your order has been confirmed.',
                         ),
-                        TimelineTile(
-                          alignment: TimelineAlign.manual,
-                          lineXY: 0.1,
-                          indicatorStyle: IndicatorStyle(
-                            width: 15,
-                            color: (widget.orderProcessColor != null)
-                                ? widget.orderProcessColor
-                                : CargicColors.brandBlue,
-                            padding: EdgeInsets.all(4),
-                          ),
-                          endChild: const TrackOrderTimeLineInfo(
-                            title: 'Order Processed',
-                            message: 'We are preparing your order.',
-                          ),
-                          beforeLineStyle: LineStyle(
-                            color: CargicColors.willGreen,
-                          ),
-                          afterLineStyle: LineStyle(
-                            color: (widget.orderProcessLinColor != null)
-                                ? widget.orderProcessLinColor
-                                : CargicColors.smoothGray,
-                          ),
+                        beforeLineStyle: const LineStyle(
+                          color: CargicColors.willGreen,
                         ),
-                        TimelineTile(
-                          alignment: TimelineAlign.manual,
-                          lineXY: 0.1,
-                          isLast: true,
-                          indicatorStyle: IndicatorStyle(
-                            width: 15,
-                            color: (widget.orderAssingnedColor != null)
-                                ? widget.orderAssingnedColor
-                                : CargicColors.smoothGray,
-                            padding: EdgeInsets.all(4),
-                          ),
-                          endChild: const TrackOrderTimeLineInfo(
-                            disabled: true,
-                            title: 'Ninja assigned',
-                            message:
-                                'Sit back and relax, our Ninja will come to you',
-                          ),
-                          beforeLineStyle: LineStyle(
-                            color: (widget.orderAssignedLineColor != null)
-                                ? widget.orderAssignedLineColor
-                                : CargicColors.smoothGray,
-                          ),
+                      ),
+                      TimelineTile(
+                        alignment: TimelineAlign.manual,
+                        lineXY: 0.1,
+                        indicatorStyle: IndicatorStyle(
+                          width: 15,
+                          color: (widget.orderProcessColor != null)
+                              ? widget.orderProcessColor
+                              : CargicColors.brandBlue,
+                          padding: EdgeInsets.all(4),
                         ),
-                      ],
-                    ),
+                        endChild: const TrackOrderTimeLineInfo(
+                          title: 'Order Processed',
+                          message: 'We are preparing your order.',
+                        ),
+                        beforeLineStyle: LineStyle(
+                          color: CargicColors.willGreen,
+                        ),
+                        afterLineStyle: LineStyle(
+                          color: (widget.orderProcessLinColor != null)
+                              ? widget.orderProcessLinColor
+                              : CargicColors.smoothGray,
+                        ),
+                      ),
+                      TimelineTile(
+                        alignment: TimelineAlign.manual,
+                        lineXY: 0.1,
+                        isLast: true,
+                        indicatorStyle: IndicatorStyle(
+                          width: 15,
+                          color: (widget.orderAssingnedColor != null)
+                              ? widget.orderAssingnedColor
+                              : CargicColors.smoothGray,
+                          padding: EdgeInsets.all(4),
+                        ),
+                        endChild: const TrackOrderTimeLineInfo(
+                          disabled: true,
+                          title: 'Ninja assigned',
+                          message:
+                              'Sit back and relax, our Ninja will come to you',
+                        ),
+                        beforeLineStyle: LineStyle(
+                          color: (widget.orderAssignedLineColor != null)
+                              ? widget.orderAssignedLineColor
+                              : CargicColors.smoothGray,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Row(

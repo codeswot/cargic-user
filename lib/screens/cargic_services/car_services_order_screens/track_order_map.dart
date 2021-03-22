@@ -102,6 +102,7 @@ class _TrackOrderMapState extends State<TrackOrderMap> {
   Widget build(BuildContext context) {
     mockArived();
     getReqInfo();
+    mockIsDone();
 
     return Scaffold(
       appBar: AppBar(

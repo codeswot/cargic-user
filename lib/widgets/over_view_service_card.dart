@@ -69,7 +69,7 @@ class OverViewServiceCard extends StatelessWidget {
                 ],
               ),
             ],
-          )
+          ),
         ],
       ),
     );
