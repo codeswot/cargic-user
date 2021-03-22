@@ -8,6 +8,8 @@ import 'package:cargic_user/services/flutterwave_servuce/utils/api_utils.dart';
 import 'package:cargic_user/services/flutterwave_servuce/utils/flutter_wave_const.dart';
 import 'package:cargic_user/services/flutterwave_servuce/utils/payment_listner.dart';
 import 'package:cargic_user/services/flutterwave_servuce/utils/view_utils.dart';
+import 'package:cargic_user/utils/colors.dart';
+import 'package:cargic_user/widgets/candy_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -50,30 +52,42 @@ class _CardPaymentState extends State<CardPayment>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        key: this._scaffoldKey,
-        body: Form(
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        height: MediaQuery.of(context).size.height / 2,
+        child: Form(
           key: this._cardFormKey,
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 50, 10, 10),
+            padding: EdgeInsets.all(15),
             width: double.infinity,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.all(20),
+                  // margin: EdgeInsets.all(15),
                   alignment: Alignment.topCenter,
                   width: double.infinity,
-                  child: Text(
-                    "Enter your card details",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Enter your card details",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  // margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
                   width: double.infinity,
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -95,7 +109,7 @@ class _CardPaymentState extends State<CardPayment>
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width / 5,
-                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      // margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: "Month",
@@ -114,7 +128,7 @@ class _CardPaymentState extends State<CardPayment>
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width / 5,
-                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      // margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: "Year",
@@ -133,7 +147,7 @@ class _CardPaymentState extends State<CardPayment>
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width / 5,
-                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      // margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: "cvv",
@@ -155,24 +169,35 @@ class _CardPaymentState extends State<CardPayment>
                   ],
                 ),
                 Container(
-                  width: double.infinity,
-                  height: 45,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  child: RaisedButton(
-                    onPressed: this._onCardFormClick,
-                    color: Colors.orangeAccent,
-                    child: Text(
-                      "PAY",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
+                    width: double.infinity,
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    child: CandyButton(
+                      title: 'Pay',
+                      buttonColor: CargicColors.brandBlue,
+                      titleColor: CargicColors.plainWhite,
+                      onPressed: this._onCardFormClick,
+                    )),
                 Container(
                   height: 1.0,
                   width: double.infinity,
                   color: Colors.black26,
                   margin: EdgeInsets.fromLTRB(25, 1, 25, 10),
                 ),
+                SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "-₦340.0",
+                      style: TextStyle(
+                        color: CargicColors.rageRed,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

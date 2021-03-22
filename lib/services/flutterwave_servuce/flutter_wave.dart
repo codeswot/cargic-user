@@ -1,3 +1,6 @@
+import 'package:cargic_user/services/flutterwave_servuce/card_payment_card.dart';
+import 'package:cargic_user/services/flutterwave_servuce/card_payment_manager.dart';
+import 'package:cargic_user/services/flutterwave_servuce/pay_pop_up.dart';
 import 'package:flutter/material.dart';
 
 import 'flutter_wave_currencies.dart';
@@ -63,24 +66,10 @@ class Flutterwave {
     this.acceptGhanaPayment = false,
     this.acceptUgandaPayment = false,
     this.acceptFrancophoneMobileMoney = false,
-
-    //TODO to be added later when ready on v3
-    // this.acceptBankTransferPayment = false,
-    // this.acceptUKAccountPayment = false,
-    // this.acceptVoucherPayment = false,
-    // this.acceptSouthAfricaBankPayment = false,
-    // this.acceptBarterPayment = false,
   }) {
     this.currency = this.currency.toUpperCase();
 
     if (this.currency == FlutterwaveCurrency.NGN) {
-      // this.acceptAccountPayment = this.acceptAccountPayment;
-      // this.acceptUSSDPayment = this.acceptUSSDPayment;
-      // this.acceptBankTransferPayment = this.acceptBankTransferPayment;
-      // this.acceptCardPayment = this.acceptCardPayment;
-      // this.acceptBarterPayment = this.acceptBarterPayment;
-      // this.acceptUKAccountPayment = false;
-
       this.acceptRwandaMoneyPayment = false;
       this.acceptMpesaPayment = false;
       this.acceptZambiaPayment = false;
@@ -149,42 +138,12 @@ class Flutterwave {
       this.acceptUgandaPayment = false;
       this.acceptUSSDPayment = false;
     }
-
-    //TODO to be included once UK Account payments and ACH become available on v3
-    // if (this.currency == FlutterwaveCurrency.GBP) {
-    //   // this.acceptUKAccountPayment = true;
-    //   this.acceptCardPayment = true;
-    //   // this.acceptBarterPayment = true;
-    // }
-    // if (this.currency == FlutterwaveCurrency.ZAR) {
-    //   this.acceptAccountPayment = false;
-    //   this.acceptBankTransferPayment = false;
-    //   this.acceptRwandaMoneyPayment = false;
-    //   this.acceptMpesaPayment = false;
-    //   this.acceptGhanaPayment = false;
-    //   this.acceptUgandaPayment = false;
-    //   this.acceptFrancophoneMobileMoney = false;
-    //   // this.acceptBarterPayment = true;
-    // }
-
-    // if (this.acceptBankTransferPayment) {
-    //   if (this.phoneNumber == null ||
-    //       this.frequency == null ||
-    //       this.narration == null ||
-    //       this.duration == null) {
-    //     throw (FlutterError(
-    //         "To accept Bank transfer Payments, phone number, frequency, narration and duration must be supplied."));
-    //   }
-    // }
   }
 
   String country;
 
   String _setCountry() {
     switch (this.currency) {
-      //TODO to be included once ACH payment is available on v3
-      // case FlutterwaveCurrency.ZAR:
-      //   return "ZA";
       case FlutterwaveCurrency.NGN:
         return "NG";
       case FlutterwaveCurrency.GHS:
@@ -200,34 +159,32 @@ class Flutterwave {
     }
   }
 
-  /// Launches payment screen
-  /// Returns a future ChargeResponse intance
-  /// Nullable
   Future<ChargeResponse> initializeForUiPayments() async {
     FlutterwavePaymentManager paymentManager = FlutterwavePaymentManager(
-        publicKey: this.publicKey,
-        encryptionKey: this.encryptionKey,
-        currency: this.currency,
-        email: this.email,
-        fullName: this.fullName,
-        amount: this.amount,
-        txRef: this.txRef,
-        isDebugMode: this.isDebugMode,
-        narration: this.narration,
-        isPermanent: this.isPermanent,
-        phoneNumber: this.phoneNumber,
-        frequency: this.frequency,
-        duration: this.duration,
-        acceptAccountPayment: this.acceptAccountPayment,
-        acceptCardPayment: this.acceptCardPayment,
-        acceptUSSDPayment: this.acceptUSSDPayment,
-        acceptRwandaMoneyPayment: this.acceptRwandaMoneyPayment,
-        acceptMpesaPayment: this.acceptMpesaPayment,
-        acceptZambiaPayment: this.acceptZambiaPayment,
-        acceptGhanaPayment: this.acceptGhanaPayment,
-        acceptUgandaPayment: this.acceptUgandaPayment,
-        acceptFancophoneMobileMoney: this.acceptFrancophoneMobileMoney,
-        country: this._setCountry());
+      publicKey: this.publicKey,
+      encryptionKey: this.encryptionKey,
+      currency: this.currency,
+      email: this.email,
+      fullName: this.fullName,
+      amount: this.amount,
+      txRef: this.txRef,
+      isDebugMode: this.isDebugMode,
+      narration: this.narration,
+      isPermanent: this.isPermanent,
+      phoneNumber: this.phoneNumber,
+      frequency: this.frequency,
+      duration: this.duration,
+      acceptAccountPayment: this.acceptAccountPayment,
+      acceptCardPayment: this.acceptCardPayment,
+      acceptUSSDPayment: this.acceptUSSDPayment,
+      acceptRwandaMoneyPayment: this.acceptRwandaMoneyPayment,
+      acceptMpesaPayment: this.acceptMpesaPayment,
+      acceptZambiaPayment: this.acceptZambiaPayment,
+      acceptGhanaPayment: this.acceptGhanaPayment,
+      acceptUgandaPayment: this.acceptUgandaPayment,
+      acceptFancophoneMobileMoney: this.acceptFrancophoneMobileMoney,
+      country: this._setCountry(),
+    );
 
     final chargeResponse = await this._launchPaymentScreen(paymentManager);
     return chargeResponse;
@@ -235,9 +192,38 @@ class Flutterwave {
 
   Future<ChargeResponse> _launchPaymentScreen(
       final FlutterwavePaymentManager paymentManager) async {
-    return await Navigator.push(
-      this.context,
-      MaterialPageRoute(builder: (context) => FlutterwaveUI(paymentManager)),
-    );
+    final CardPaymentManager cardPaymentManager =
+        paymentManager.getCardPaymentManager();
+    final ChargeResponse chargeResponse = await showDialog(
+        context: context,
+        builder: (context) {
+          return CardPayment(cardPaymentManager);
+        });
+//msgs
+    String message;
+    if (chargeResponse != null) {
+      message = chargeResponse.message;
+    } else {
+      message = "Transaction cancelled";
+    }
+    this.showSnackBar(message);
+    // Navigator.pop(this.context, chargeResponse);
   }
+
+  void showSnackBar(String message) {
+    SnackBar snackBar = SnackBar(
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+      ),
+    );
+    // this._scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+  // return await Navigator.push(
+  //   this.context,
+  //   MaterialPageRoute(
+  //     builder: (context) => PopUpPayment(paymentManager: paymentManager),
+  //   ),
+  // );
+
 }
