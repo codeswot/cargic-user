@@ -122,7 +122,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                         isAssigned: isAssigned,
                         onTap: (orderStatus == 'accepted')
                             ? () {
-                                print('Assingend, taking to map');
+                                print('Assingend, taking to work');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

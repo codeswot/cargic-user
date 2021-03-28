@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:cargic_user/helpers/location_helper.dart';
 import 'package:cargic_user/screens/cargic_services/car_services_order_screens/car_service_confirm_payment.dart';
 import 'package:cargic_user/screens/navigation_screen.dart';
 import 'package:cargic_user/utils/colors.dart';
-import 'package:cargic_user/widgets/cargicMaps.dart';
 import 'package:cargic_user/widgets/request_service_provider_card.dart';
+import 'package:cargic_user/widgets/track_order_timeline.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TrackOrderMap extends StatefulWidget {
@@ -24,47 +23,36 @@ class _TrackOrderMapState extends State<TrackOrderMap> {
   String orderID = '';
   String ninjaName = '';
   String ninjaPhone = '';
-  String message = 'Hello';
   double ninjaRating;
+  String orderStatus = 'pending';
+  bool isProssesed = false;
+  bool isAssigned = false;
+  Color processColor;
+  Color processLineColor;
+  Color assignedColor;
+  Color assignedLineColor;
+  FirebaseDatabase db = FirebaseDatabase.instance;
 
-  double getReqInfo() {
+  getReqInfo() {
     DatabaseReference cargicReqNinjaInfoRef = FirebaseDatabase()
         .reference()
         .child('cargicReq/${widget.reqID}/ninjaInfo');
-    cargicReqNinjaInfoRef.once().then((ninjaInfo) {
+    cargicReqNinjaInfoRef.once().then((DataSnapshot ninjaInfo) {
       if (ninjaInfo != null) {
         setState(() {
           ninjaName = ninjaInfo.value['ninjaName'].toString();
           ninjaPhone = ninjaInfo.value['phone'].toString();
           ninjaRating = double.parse(ninjaInfo.value['rating']);
-          orderID = widget.orderID;
+          orderID = widget.orderID.toString();
         });
       }
     });
 
-    print(ninjaRating);
+    print(widget.reqID);
     return ninjaRating;
   }
 
-  getDirection() {}
-
-  String mockDashMessage = '';
-  String eta = 'Arrival Time 30 Minutes';
   bool isArived = false;
-  mockArived() {
-    getReqInfo();
-    Timer(Duration(seconds: 5), () {
-      setState(() {
-        isArived = true;
-        mockDashMessage = '$ninjaName  has Arrived';
-        eta = '';
-      });
-      if (isArived) {
-        // mockIsDone();
-      }
-    });
-  }
-
   mockIsDone() {
     Timer(Duration(seconds: 7), () {
       Navigator.of(context).pushAndRemoveUntil(
@@ -94,19 +82,18 @@ class _TrackOrderMapState extends State<TrackOrderMap> {
 
   @override
   void initState() {
-    mockArived();
+    getReqInfo();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    mockArived();
     getReqInfo();
-    mockIsDone();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('order $orderID'),
+        title: Text('order ${widget.orderID}'),
         bottom: PreferredSize(
           child: Container(
             width: double.infinity,
@@ -116,19 +103,19 @@ class _TrackOrderMapState extends State<TrackOrderMap> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$mockDashMessage',
+                  'Ninja\n $ninjaName',
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: TextStyle(
                     color: CargicColors.brandBlue,
                     fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                    fontSize: 19,
                   ),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  '$eta', //show Arival Time DATETIME for later booking
+                  '', //show Arival Time DATETIME for later booking
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -144,12 +131,94 @@ class _TrackOrderMapState extends State<TrackOrderMap> {
       body: Container(
         child: Stack(
           children: [
-            CargicMap(),
-            Align(
-              alignment: Alignment.topCenter,
-              //add some animation for fade, transition
-              child: Container(
-                width: double.infinity,
+            // CargicMap(),
+            Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Flexible(
+                    flex: 4,
+                    child: StreamBuilder(
+                        stream: db
+                            .reference()
+                            .child('cargicReq/${widget.reqID}')
+                            .onValue,
+                        builder: (context, snap) {
+                          if (snap.data != null) {
+                            return Column(
+                              children: [
+                                SizedBox(height: 15),
+                                TimelineTile(
+                                  alignment: TimelineAlign.manual,
+                                  lineXY: 0.1,
+                                  indicatorStyle: const IndicatorStyle(
+                                    width: 15,
+                                    color: CargicColors.willGreen,
+                                    padding: EdgeInsets.all(4),
+                                  ),
+                                  endChild: const TrackOrderTimeLineInfo(
+                                    title: 'Ninja Accepted',
+                                    message: 'Ninja Will Arrive Soon.',
+                                  ),
+                                  beforeLineStyle: const LineStyle(
+                                    color: CargicColors.willGreen,
+                                  ),
+                                ),
+                                TimelineTile(
+                                  alignment: TimelineAlign.manual,
+                                  lineXY: 0.1,
+                                  indicatorStyle: const IndicatorStyle(
+                                    width: 15,
+                                    color: CargicColors.willGreen,
+                                    padding: EdgeInsets.all(4),
+                                  ),
+                                  endChild: const TrackOrderTimeLineInfo(
+                                    title: 'Ninja Arrived',
+                                    message: 'Ninja has Arrive.',
+                                  ),
+                                  beforeLineStyle: const LineStyle(
+                                    color: CargicColors.willGreen,
+                                  ),
+                                ),
+                                TimelineTile(
+                                  alignment: TimelineAlign.manual,
+                                  lineXY: 0.1,
+                                  indicatorStyle: const IndicatorStyle(
+                                    width: 15,
+                                    color: CargicColors.willGreen,
+                                    padding: EdgeInsets.all(4),
+                                  ),
+                                  endChild: const TrackOrderTimeLineInfo(
+                                    title: 'Ninja started work',
+                                    message: 'Ninja Has started working.',
+                                  ),
+                                  beforeLineStyle: const LineStyle(
+                                    color: CargicColors.willGreen,
+                                  ),
+                                ),
+                                TimelineTile(
+                                  alignment: TimelineAlign.manual,
+                                  lineXY: 0.1,
+                                  indicatorStyle: const IndicatorStyle(
+                                    width: 15,
+                                    color: CargicColors.willGreen,
+                                    padding: EdgeInsets.all(4),
+                                  ),
+                                  endChild: const TrackOrderTimeLineInfo(
+                                    title: 'Ninja Done',
+                                    message: 'Ninja finished the work.',
+                                  ),
+                                  beforeLineStyle: const LineStyle(
+                                    color: CargicColors.willGreen,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                          return CircularProgressIndicator();
+                        }),
+                  ),
+                ],
               ),
             ),
             Align(
